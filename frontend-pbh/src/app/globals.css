@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+
+:root {
+	--font-sans: 'Roboto', sans-serif;
+	--font-heading: 'Montserrat', sans-serif;
+	--background: #ffffff;
+	--foreground: #171717;
+}
+
+@theme inline {
+	--font-sans: var(--font-sans);
+	--font-heading: var(--font-heading);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-transparent-text: rgba(0, 0, 0, 0.5);
+	--color-primary: #8e0092;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
+}
+
+html {
+	scrollbar-gutter: stable;
+}
+
+body {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	font-family: var(--font-sans);
+	padding: 0;
+	margin: 0;
+	min-width: 360px;
+	width: 100%;
+	position: relative;
+}
+
+h1,
+h2,
+h4,
+h5,
+h6 {
+	font-family: var(--font-heading);
+	padding: 0;
+}
+h3 {
+	font-family: var(--font-sans);
+}
+
+body::-webkit-scrollbar {
+	z-index: 1000;
+	width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+	background: var(--foreground);
+}
+body::-webkit-scrollbar-thumb {
+	background-color: var(--color-primary);
+	border-radius: 2px;
+	border: 8px solid foreground;
+}
+
+@layer base {
+	h1 {
+		@apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold;
+	}
+	h2 {
+		@apply text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold;
+	}
+	h3 {
+		@apply text-lg/5 sm:text-lg/5 md:text-xl/6 lg:text-xl/7 xl:text-2xl/7 2xl:text-3xl/7 font-light;
+	}
+	h4 {
+		@apply text-xs/5 sm:text-base/5 md:text-lg/5 xl:text-xl/6;
+	}
+	p {
+		@apply text-xs sm:text-base md:text-lg lg:text-xl;
+	}
+	label {
+		@apply text-sm md:text-base lg:text-lg;
+	}
+
+	hr {
+		@apply border-b w-full text-transparent-text;
+	}
+	strong {
+		@apply font-bold text-primary;
+	}
+}
