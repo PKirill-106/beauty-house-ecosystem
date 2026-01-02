@@ -1,0 +1,45 @@
+.searchBar {
+	position: relative;
+	flex: 1;
+	align-items: center;
+	text-align: center;
+
+	.search-input {
+		border: 2px solid var(--muted-foreground);
+		border-radius: 25px;
+		border-top-left-radius: 0;
+		height: 40px;
+		padding-right: 66px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		&:focus {
+			border: 2px solid var(--color-primary);
+		}
+	}
+	.search-input::-webkit-search-cancel-button {
+		display: none;
+	}
+
+	.clear-icon {
+		width: 14px;
+		height: 14px;
+		position: absolute;
+		top: 12px;
+		right: 40px;
+		z-index: 10;
+		color: var(--color-foreground);
+		cursor: pointer;
+	}
+
+	.search-icon {
+		width: 20px;
+		position: absolute;
+		top: 8px;
+		right: 10px;
+		z-index: 10;
+		color: var(--muted-foreground);
+		cursor: pointer;
+	}
+}

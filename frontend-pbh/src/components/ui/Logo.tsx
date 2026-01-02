@@ -1,9 +1,19 @@
+'use client'
 import { ILogo } from '@/types/interfacesProps'
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import MyTooltip from '../layout/MyTooltip'
 
 export default function Logo(props: ILogo) {
-	return (
-		<div className=''>
+	const pathname = usePathname()
+
+	const logoContent = (
+		<div
+			className={`${
+				pathname === '/' ? '' : 'hover:scale-105 duration-300 transition-all'
+			}`}
+		>
 			<Image
 				src={
 					props.type === 'dark'
@@ -13,7 +23,7 @@ export default function Logo(props: ILogo) {
 				alt='beauty house logo'
 				width={240}
 				height={145}
-				className='hidden md:flex object-contain md:w-60 md:h-14 lg:w-60 lg:h-16 xl:w-76 xl:h-18'
+				className='hidden md:flex object-contain md:w-56 md:h-14 lg:w-60 lg:h-16 xl:w-73 xl:h-18'
 			/>
 			<Image
 				src={
@@ -28,4 +38,14 @@ export default function Logo(props: ILogo) {
 			/>
 		</div>
 	)
+
+	if (pathname !== '/')
+		return (
+			<MyTooltip
+				element={<Link href='/'>{logoContent}</Link>}
+				tip='На Головну'
+			/>
+		)
+
+	return logoContent
 }
