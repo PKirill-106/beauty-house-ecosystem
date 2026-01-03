@@ -27,3 +27,31 @@ export interface IUserInfo {
 	address: IAddress
 	phoneNumber: string
 }
+
+// Category
+export interface ICategory {
+	id: string
+	name: string
+	slug: string
+	description: string
+	parentCategoryId?: string
+	imageURL?: string
+}
+export interface ICreateCategory {
+	name: string
+	description: string
+	parentCategoryId?: string
+	image: File | string
+}
+export interface IUpdateCategory {
+	id: string
+	name: string
+	description: string
+	parentCategoryId?: string
+	existingImageURL?: string
+	newImage: File | string
+}
+export interface IDeleteCategory {
+	categoryId: string
+	option: 'CascadeDelete' | 'ReassignToParent' | 'Orphan'
+}
