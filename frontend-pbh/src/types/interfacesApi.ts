@@ -121,3 +121,23 @@ export interface ICartItem {
 	productVariantId: string
 	quantity: number
 }
+
+// Discount and Season
+interface IDealBase {
+	id: string
+	name: string
+	slug: string
+	startDate: string
+	endDate: string
+}
+export interface IDiscount extends IDealBase {
+	discountPercentage: number
+	removeAfterExpiration: boolean
+	productIds: string[]
+}
+export interface ISeasonP extends IDealBase {
+	products: IProduct[]
+}
+export interface ISeasonId extends IDealBase {
+	productIds: string[]
+}
