@@ -55,3 +55,60 @@ export interface IDeleteCategory {
 	categoryId: string
 	option: 'CascadeDelete' | 'ReassignToParent' | 'Orphan'
 }
+
+//Products
+export interface IProductVariant {
+	id: string
+	name: number
+	price: number
+	discountPrice: number
+	unitsInStock: number
+	isStock: boolean
+}
+export interface IProductImage {
+	filePath: string
+	sequenceNumber: number
+	file?: File
+}
+export interface IProductColor {
+	name: string
+	colorHex: string
+}
+export interface IProduct {
+	id: string
+	name: string
+	slug: string
+	description: string
+	productVariants: IProductVariant[]
+	discountId: string
+	isSeasonal: boolean
+	isDiscounted: boolean
+	isNew: boolean
+	categoryId: string
+	categoryName: string
+	sku: string
+	productImages: IProductImage[]
+	colors: IProductColor[]
+}
+export interface ICreateProduct {
+	name: string
+	description: string
+	productVariantsJson: string
+	categoryId: string
+	productColorsJson: string
+	sku: string
+	images: (File | string)[]
+	imageSequenceNumbers: number[]
+}
+export interface IUpdateProduct {
+	id: string
+	name: string
+	description: string
+	productVariantsJson: string
+	categoryId: string
+	productColorsJson: string
+	sku: string
+	existingImages: string
+	newImages: (File | string)[]
+	imageSequenceNumbers: number[]
+}
