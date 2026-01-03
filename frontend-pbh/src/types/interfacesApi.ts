@@ -112,3 +112,12 @@ export interface IUpdateProduct {
 	newImages: (File | string)[]
 	imageSequenceNumbers: number[]
 }
+
+//Cart
+export interface ICartItem {
+	id?: string
+	addedAt?: string
+	productId: string
+	productVariantId: string
+	quantity: number
+}
