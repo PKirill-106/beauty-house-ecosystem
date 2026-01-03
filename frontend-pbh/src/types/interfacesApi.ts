@@ -181,3 +181,19 @@ export interface ICreateReview {
 export interface IReview extends Omit<ICreateReview, 'productId'> {
 	id: string
 }
+
+// Nova Post Services
+export interface IArea {
+	Ref: string
+	Description: string
+}
+export interface ICity {
+	Ref: string
+	Description: string
+	Area: string
+}
+export interface IWarehouse {
+	Ref: string
+	Description: string
+	CityRef: string
+}
