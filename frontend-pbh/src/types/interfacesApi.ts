@@ -141,3 +141,33 @@ export interface ISeasonP extends IDealBase {
 export interface ISeasonId extends IDealBase {
 	productIds: string[]
 }
+
+// Orders
+export interface IOrderItem {
+	itemId: string
+	quantity: number
+	price: number
+}
+interface IOrderBase {
+	orderItems: IOrderItem[]
+	paymentMethod: 'paymentSystem' | 'onCard'
+	deliveryMethod: 'novaPost' | 'courier'
+	additionalInfo: string
+	recipientFirstName: string
+	recipientLastName: string
+	recipientEmail: string
+	recipientPhone: string
+}
+export interface IOrder extends IOrderBase {
+	id: string
+	orderNumber: string
+	orderDate: string
+	addressId: string
+	address: IAddress | INovaPost
+	status: string
+	userName: string
+}
+export interface ICreateOrder extends IOrderBase {
+	userAddress: IAddress
+	postAddress: INovaPost
+}
