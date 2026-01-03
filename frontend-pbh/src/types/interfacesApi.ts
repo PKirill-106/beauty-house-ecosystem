@@ -171,3 +171,13 @@ export interface ICreateOrder extends IOrderBase {
 	userAddress: IAddress
 	postAddress: INovaPost
 }
+
+// Reviews
+export interface ICreateReview {
+	productId: string
+	rating: number
+	comment: string
+}
+export interface IReview extends Omit<ICreateReview, 'productId'> {
+	id: string
+}
