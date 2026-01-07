@@ -1,10 +1,10 @@
 'use server'
 
 import { ICreateReview } from '@/types/interfacesApi'
-import { api, publicApi } from '../api/axios'
+import { api} from '../api/axios'
 
 export async function getAllReviews(productId: string) {
-	const { data } = await publicApi
+	const { data } = await api
 		.get(`/Review/all/${productId}`)
 		.catch(error => {
 			throw new Error('Failed to fetch reviews: ', error)

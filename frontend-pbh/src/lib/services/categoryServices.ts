@@ -2,10 +2,10 @@
 
 import { IDeleteCategory } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
-import { api, publicApi } from '../api/axios'
+import { api } from '../api/axios'
 
 export async function getAllCategories() {
-	const { data } = await publicApi.get('/Category/GetAll').catch(error => {
+	const { data } = await api.get('/Category/GetAll').catch(error => {
 		throw new Error('Failed to fetch categories: ', error)
 	})
 

@@ -1,9 +1,7 @@
 'use server'
 
 import { ICreateOrder } from '@/types/interfacesApi'
-import { api, publicApi } from '../api/axios'
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { api } from '../api/axios'
 
 export async function getAllOrders() {
 	const { data } = await api.get('/Order/all').catch(error => {
@@ -40,7 +38,7 @@ export async function createAuthOrder(orderData: Partial<ICreateOrder>) {
 }
 
 export async function createGuestOrder(orderData: Partial<ICreateOrder>) {
-	const { data } = await publicApi
+	const { data } = await api
 		.post('/Order/create-guest', JSON.stringify(orderData))
 		.catch(error => {
 			throw new Error('Failed to create guest order: ', error)

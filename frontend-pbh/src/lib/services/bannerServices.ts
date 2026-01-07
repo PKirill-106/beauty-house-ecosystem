@@ -1,14 +1,12 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { api, publicApi } from '../api/axios'
+import { api } from '../api/axios'
 
 export async function getBannerImages() {
-	const { data } = await publicApi
-		.get('/Banner/GetBannerImages')
-		.catch(error => {
-			throw new Error('Failed to fetch banners: ', error)
-		})
+	const { data } = await api.get('/Banner/GetBannerImages').catch(error => {
+		throw new Error('Failed to fetch banners: ', error)
+	})
 
 	return data.data
 }

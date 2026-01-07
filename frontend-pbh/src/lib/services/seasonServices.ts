@@ -2,10 +2,10 @@
 
 import { ISeasonId } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
-import { api, publicApi } from '../api/axios'
+import { api } from '../api/axios'
 
 export async function getAllSeasons() {
-	const { data } = await publicApi.get('/Season/GetAll').catch(error => {
+	const { data } = await api.get('/Season/GetAll').catch(error => {
 		throw new Error('Failed to fetch seasons: ', error)
 	})
 
@@ -13,17 +13,15 @@ export async function getAllSeasons() {
 }
 
 export async function getSeasonById(id: string) {
-	const { data } = await publicApi
-		.get(`/Season/GetById?id=${id}`)
-		.catch(error => {
-			throw new Error('Failed to fetch season by id: ', error)
-		})
+	const { data } = await api.get(`/Season/GetById?id=${id}`).catch(error => {
+		throw new Error('Failed to fetch season by id: ', error)
+	})
 
 	return data.data
 }
 
 export async function getSeasonBySlug(slug: string) {
-	const { data } = await publicApi.get(`/Season/${slug}`).catch(error => {
+	const { data } = await api.get(`/Season/${slug}`).catch(error => {
 		throw new Error('Failed to fetch season by slug: ', error)
 	})
 

@@ -1,11 +1,11 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { api, publicApi } from '../api/axios'
+import { api } from '../api/axios'
 import { IDiscount } from '@/types/interfacesApi'
 
 export async function getAllDiscounts() {
-	const { data } = await publicApi.get('/Discount/GetAll').catch(error => {
+	const { data } = await api.get('/Discount/GetAll').catch(error => {
 		throw new Error('Failed to fetch discounts: ', error)
 	})
 
@@ -13,7 +13,7 @@ export async function getAllDiscounts() {
 }
 
 export async function getDiscountById(id: string) {
-	const { data } = await publicApi.get(`/Discount/${id}`).catch(error => {
+	const { data } = await api.get(`/Discount/${id}`).catch(error => {
 		throw new Error('Failed to fetch discount by id: ', error)
 	})
 
@@ -34,7 +34,7 @@ export async function createDiscount(
 }
 
 export async function updateDiscount(discountDate: Omit<IDiscount, 'slug'>) {
-	const { data } = await publicApi
+	const { data } = await api
 		.put('Discount/Update', JSON.stringify(discountDate))
 		.catch(error => {
 			throw new Error('Failed to update discount: ', error)
