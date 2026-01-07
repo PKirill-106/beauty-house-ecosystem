@@ -2,10 +2,10 @@
 
 import { IProduct } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
-import { api, publicApi } from '../api/axios'
+import { api } from '../api/axios'
 
-export async function getAllProducts() {
-	const { data } = await publicApi.get('/Product/GetAll').catch(error => {
+export async function getProducts() {
+	const { data } = await api.get('/Product/GetAll').catch(error => {
 		throw new Error('Failed to fetch products: ', error)
 	})
 
@@ -13,7 +13,7 @@ export async function getAllProducts() {
 }
 
 export async function getProductBySlug(slug: string) {
-	const { data } = await publicApi.get(`/Product/${slug}`).catch(error => {
+	const { data } = await api.get(`/Product/${slug}`).catch(error => {
 		throw new Error('Failed to fetch product by slug: ', error)
 	})
 
@@ -45,11 +45,11 @@ export async function updateProduct(
 }
 
 export async function deleteProduct(
-	productId: Pick<IProduct, 'id'>,
+	productId: IProduct['id'],
 	slug: string | undefined
 ) {
 	const { data } = await api
-		.delete(`Product/Delete?id=${productId.id}`, {
+		.delete(`Product/Delete?id=${productId}`, {
 			data: JSON.stringify(productId),
 		})
 		.catch(error => {
@@ -61,7 +61,7 @@ export async function deleteProduct(
 }
 
 export async function getAllColors() {
-	const { data } = await publicApi.get('/Product/GetAllColors').catch(error => {
+	const { data } = await api.get('/Product/GetAllColors').catch(error => {
 		throw new Error('Failed to fetch colors: ', error)
 	})
 

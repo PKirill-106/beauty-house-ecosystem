@@ -2,7 +2,7 @@ import Footer from '@/components/layout/Footer'
 import Navbar from '@/components/layout/Navbar'
 import { ApiProvider } from '@/lib/api/apiClient'
 import { authOptions } from '@/lib/auth'
-import AuthSessionProvider from '@/providers/SessionProvider'
+import ClientProvider from '@/providers/ClientProvider'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { Montserrat, Roboto } from 'next/font/google'
@@ -34,13 +34,13 @@ export default async function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={`${montserrat.variable} ${roboto.variable} antialiased`}>
-				<AuthSessionProvider session={session}>
+				<ClientProvider session={session}>
 					<ApiProvider />
 					<Toaster position='top-center' />
 					<Navbar />
 					<main>{children}</main>
 					<Footer />
-				</AuthSessionProvider>
+				</ClientProvider>
 			</body>
 		</html>
 	)

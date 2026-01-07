@@ -1,8 +1,8 @@
 'use client'
 import { CircleX, Search } from 'lucide-react'
+import { useRef, useState } from 'react'
 import { Input } from '../ui/input'
 import styles from './SearchBar.module.scss'
-import { useRef, useState } from 'react'
 
 export default function SearchBar() {
 	const [searchValue, setSearchValue] = useState<string>('')
