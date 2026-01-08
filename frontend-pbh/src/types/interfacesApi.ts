@@ -113,6 +113,23 @@ export interface IUpdateProduct {
 	imageSequenceNumbers: number[]
 }
 
+//Banners
+export interface IBanner {
+	sequenceNumber: number
+	imageURL: string
+	pageURL: string
+	buttonText: string
+	text: string
+}
+export interface IUpdateBanner {
+	existingImages: string
+	newImages: (File | string)[]
+	imageSequenceNumbers: number[]
+	pageUrls: string[]
+	buttonTexts: string[]
+	texts: string[]
+}
+
 //Cart
 export interface ICartItem {
 	id?: string
@@ -135,7 +152,7 @@ export interface IDiscount extends IDealBase {
 	removeAfterExpiration: boolean
 	productIds: string[]
 }
-export interface ISeasonP extends IDealBase {
+export interface ISeason extends IDealBase {
 	products: IProduct[]
 }
 export interface ISeasonId extends IDealBase {
