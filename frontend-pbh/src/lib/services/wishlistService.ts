@@ -22,9 +22,9 @@ export async function addProductToWishList(productId: string) {
 	return data.data
 }
 
-export async function updateWishList(wishlistItemId: string[]) {
+export async function updateWishList(wishlistItemIds: string[]) {
 	const { data } = await api
-		.put('/WhisList/UpdateWishList', JSON.stringify(wishlistItemId))
+		.put('/WhisList/UpdateWishList', JSON.stringify(wishlistItemIds))
 		.catch(error => {
 			throw new Error('Failed to update wishlist: ', error)
 		})

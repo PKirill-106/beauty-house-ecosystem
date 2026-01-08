@@ -17,6 +17,7 @@ export const productApi = createApi({
 	endpoints: builder => ({
 		getProducts: builder.query<IProduct[], void>({
 			queryFn: async () => apiWrapper(() => getProducts()),
+			providesTags: ['Products'],
 		}),
 		getProductBySlug: builder.query<IProduct, IProduct['slug']>({
 			queryFn: async slug => apiWrapper(() => getProductBySlug(slug)),

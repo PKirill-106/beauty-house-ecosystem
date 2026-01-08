@@ -21,10 +21,10 @@ export async function getDiscountById(id: string) {
 }
 
 export async function createDiscount(
-	discountDate: Omit<IDiscount, 'id' | 'slug'>
+	discountData: Omit<IDiscount, 'id' | 'slug'>
 ) {
 	const { data } = await api
-		.post('/Discount/Create', JSON.stringify(discountDate))
+		.post('/Discount/Create', JSON.stringify(discountData))
 		.catch(error => {
 			throw new Error('Failed to create discount: ', error)
 		})

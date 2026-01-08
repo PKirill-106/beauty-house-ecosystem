@@ -57,7 +57,7 @@ export async function cancelOrder(orderId: string) {
 	return data.data
 }
 
-export async function updateOrderToPaid(orderNumber: string, token: string) {
+export async function updateOrderToPaid(orderNumber: string) {
 	const { data } = await api.put(`/Order/paid/${orderNumber}`).catch(error => {
 		throw new Error('Failed to set order as paid: ', error)
 	})
