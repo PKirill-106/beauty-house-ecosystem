@@ -1,5 +1,5 @@
 import Footer from '@/components/layout/Footer'
-import Navbar from '@/components/layout/Navbar'
+import Navbar from '@/components/layout/navbar/Navbar'
 import { ApiProvider } from '@/lib/api/apiClient'
 import { authOptions } from '@/lib/auth'
 import ClientProvider from '@/providers/ClientProvider'

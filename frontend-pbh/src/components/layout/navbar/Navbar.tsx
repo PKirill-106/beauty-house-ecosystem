@@ -1,8 +1,8 @@
 import { Heart, Instagram, ShoppingBag, User } from 'lucide-react'
 import Link from 'next/link'
-import Logo from '../ui/Logo'
-import MyTooltip from './MyTooltip'
-import SearchBar from '../searchbar/SearchBar.tsx'
+import Logo from '../../ui/Logo.tsx'
+import MyTooltip from '../MyTooltip.tsx'
+import SearchBar from '../../searchbar/SearchBar.tsx'
 
 export default function Navbar() {
 	return (

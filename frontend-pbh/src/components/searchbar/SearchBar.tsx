@@ -13,6 +13,7 @@ export default function SearchBar() {
 	const { data: products, isLoading } = useGetProductsQuery()
 
 	const inputRef = useRef<HTMLInputElement>(null)
+	const resultRef = useRef<HTMLInputElement>(null)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -26,9 +27,11 @@ export default function SearchBar() {
 
 		if (searchValue.trim()) {
 			timeoutRef.current = setTimeout(() => {
-				const filteredProducts = products?.filter(product =>
-					product.name.toLowerCase().includes(searchValue.toLowerCase())
-				)
+				const filteredProducts = products
+					?.filter(product =>
+						product.name.toLowerCase().includes(searchValue.toLowerCase())
+					)
+					.slice(0, 10)
 
 				setSearchedProducts(filteredProducts || [])
 			}, 400)
@@ -42,6 +45,25 @@ export default function SearchBar() {
 			}
 		}
 	}, [searchValue])
+
+	useEffect(() => {
+		if (!isOpen) return
+
+		const handleClickOutside = (e: MouseEvent) => {
+			if (
+				inputRef.current &&
+				!inputRef.current.contains(e.target as Node) &&
+				resultRef.current &&
+				!resultRef.current.contains(e.target as Node)
+			) {
+				setIsOpen(false)
+			}
+		}
+
+		document.addEventListener('mousedown', handleClickOutside)
+
+		return () => document.removeEventListener('mousedown', handleClickOutside)
+	}, [isOpen])
 
 	const handleClear = () => {
 		setSearchValue('')
@@ -59,7 +81,6 @@ export default function SearchBar() {
 						setSearchValue(e.target.value)
 					}}
 					onFocus={() => setIsOpen(true)}
-					onBlur={() => setIsOpen(false)}
 					placeholder='Пошук'
 					type='search'
 					className={styles['search-input']}
@@ -83,7 +104,10 @@ export default function SearchBar() {
 				</div>
 			) : (
 				isOpen && (
-					<div className='absolute top-14 md:top-18 lg:top-20 xl:top-20 left-1/2 -translate-x-1/2 w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl bg-white mt-1 rounded-md shadow-lg max-h-60 overflow-y-auto z-10'>
+					<div
+						ref={resultRef}
+						className='absolute top-14 md:top-18 lg:top-20 xl:top-20 left-1/2 -translate-x-1/2 w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl bg-white mt-1 rounded-md shadow-lg max-h-60 overflow-y-auto z-10'
+					>
 						{searchedProducts.map(product => (
 							<Link
 								href={`/product/${product.slug}`}
