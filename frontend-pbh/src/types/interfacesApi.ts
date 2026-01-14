@@ -1,3 +1,13 @@
+// Api
+export interface IResponseApi<T> {
+	data: T
+	isSuccessful: boolean
+	message: string
+	statusCode: number
+}
+export type ResponseType<T> = AxiosResponse<IResponseApi<T>>
+export type ErrorType = { status: string | number; message: string }
+
 // User
 export interface IAuth {
 	email: string
