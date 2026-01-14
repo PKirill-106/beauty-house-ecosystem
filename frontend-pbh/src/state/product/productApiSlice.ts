@@ -1,4 +1,4 @@
-import { IProduct } from '@/types/interfacesApi'
+import { IProduct, IProductColor } from '@/types/interfacesApi'
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
 	createProduct,
@@ -8,47 +8,44 @@ import {
 	getProducts,
 	updateProduct,
 } from '../../lib/services/productServices'
-import { apiWrapper } from '../../lib/utils/api/helpers'
+import { ErrorType } from '../../types/interfacesApi'
 
 export const productApi = createApi({
 	reducerPath: 'productApi',
-	baseQuery: fakeBaseQuery(),
+	baseQuery: fakeBaseQuery<ErrorType>(),
 	tagTypes: ['Products', 'Product', 'Colors'],
 	endpoints: builder => ({
 		getProducts: builder.query<IProduct[], void>({
-			queryFn: async () => apiWrapper(() => getProducts()),
+			queryFn: async () => getProducts(),
 			providesTags: ['Products'],
 		}),
 		getProductBySlug: builder.query<IProduct, IProduct['slug']>({
-			queryFn: async slug => apiWrapper(() => getProductBySlug(slug)),
+			queryFn: async slug => getProductBySlug(slug),
 			providesTags: (_, __, slug) => [{ type: 'Product', id: slug }],
 		}),
 		createProduct: builder.mutation<
-			IProduct,
+			number,
 			{ formData: FormData; slug: IProduct['slug'] }
 		>({
-			queryFn: async ({ formData, slug }) =>
-				apiWrapper(() => createProduct(formData, slug)),
+			queryFn: async ({ formData, slug }) => createProduct(formData, slug),
 			invalidatesTags: ['Products'],
 		}),
 		updateProduct: builder.mutation<
-			IProduct,
+			number,
 			{ formData: FormData; slug: IProduct['slug'] }
 		>({
-			queryFn: async ({ formData, slug }) =>
-				apiWrapper(() => updateProduct(formData, slug)),
+			queryFn: async ({ formData, slug }) => updateProduct(formData, slug),
 			invalidatesTags: ['Products'],
 		}),
 		deleteProduct: builder.mutation<
-			void,
+			number,
 			{ id: IProduct['id']; slug: IProduct['slug'] }
 		>({
-			queryFn: async ({ id, slug }) =>
-				apiWrapper(() => deleteProduct(id, slug)),
+			queryFn: async ({ id, slug }) => deleteProduct(id, slug),
 			invalidatesTags: ['Products'],
 		}),
-		getAllColors: builder.query<string[], void>({
-			queryFn: async () => apiWrapper(() => getAllColors()),
+		getAllColors: builder.query<IProductColor[], void>({
+			queryFn: async () => getAllColors(),
 			providesTags: ['Colors'],
 		}),
 	}),

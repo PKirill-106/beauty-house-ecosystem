@@ -1,69 +1,76 @@
 'use server'
 
-import { IProduct } from '@/types/interfacesApi'
+import { IProduct, IProductColor, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
+import { apiWrapper } from '../utils/api/helpers'
 
 export async function getProducts() {
-	const { data } = await api.get('/Product/GetAll').catch(error => {
-		throw new Error('Failed to fetch products: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<IProduct[]> = await api.get('/Product/GetAll')
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function getProductBySlug(slug: string) {
-	const { data } = await api.get(`/Product/${slug}`).catch(error => {
-		throw new Error('Failed to fetch product by slug: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<IProduct> = await api.get(`/Product/${slug}`)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function createProduct(
 	formData: FormData,
 	slug: string | undefined
 ) {
-	const { data } = await api.post('/Product/Create', formData).catch(error => {
-		throw new Error('Failed to create product: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<number> = await api.post(
+			'/Product/Create',
+			formData
+		)
 
-	revalidatePath(`/admin/products/${slug}`)
-	return data.data
+		revalidatePath(`/admin/products/${slug}`)
+		return res.data.data
+	})
 }
 
 export async function updateProduct(
 	formData: FormData,
 	slug: string | undefined
 ) {
-	const { data } = await api.put('/Product/Update', formData).catch(error => {
-		throw new Error('Failed to update product: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<number> = await api.put('/Product/Update', formData)
 
-	revalidatePath(`/admin/products/${slug}`)
-	return data.data
+		revalidatePath(`/admin/products/${slug}`)
+		return res.data.data
+	})
 }
 
 export async function deleteProduct(
 	productId: IProduct['id'],
 	slug: string | undefined
 ) {
-	const { data } = await api
-		.delete(`Product/Delete?id=${productId}`, {
-			data: JSON.stringify(productId),
-		})
-		.catch(error => {
-			throw new Error('Failed to delete product: ', error)
-		})
+	return apiWrapper(async () => {
+		const res: ResponseType<number> = await api.delete(
+			`Product/Delete?id=${productId}`,
+			{
+				data: JSON.stringify(productId),
+			}
+		)
 
-	revalidatePath(`/admin/products/${slug}`)
-	return data.data
+		revalidatePath(`/admin/products/${slug}`)
+		return res.data.data
+	})
 }
 
 export async function getAllColors() {
-	const { data } = await api.get('/Product/GetAllColors').catch(error => {
-		throw new Error('Failed to fetch colors: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<IProductColor[]> = await api.get(
+			'/Product/GetAllColors'
+		)
 
-	return data.data
+		return res.data.data
+	})
 }
