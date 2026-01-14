@@ -1,0 +1,291 @@
+'use client'
+
+import { triggerAnimation } from '@/lib/utils/api/helpers'
+import { getLocalCart, saveLocalCart } from '@/lib/utils/locals/localCart'
+import {
+	useAddCartProductsMutation,
+	useClearCartMutation,
+	useGetCartProductsQuery,
+	useRemoveCartProductMutation,
+	useSyncCartProductsMutation,
+	useUpdateCartProductsMutation,
+} from '@/state/cart/cartApiSlice'
+import { CartOperation, ICartContext, ICartItem } from '@/types/interfacesApi'
+import { useSession } from 'next-auth/react'
+import React, {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
+import toast from 'react-hot-toast'
+
+const CartContext = createContext<ICartContext | null>(null)
+
+export default function CartProvider({
+	children,
+}: {
+	children: React.ReactNode
+}) {
+	const { data: session, status } = useSession()
+	const hasMigrated = useRef(false)
+	const [cartProducts, setCartProducts] = useState<ICartItem[]>([])
+	const [cartCount, setCartCount] = useState(0)
+
+	const isAuthenticated = !!session?.user
+
+	const [addCartProducts, postResult] = useAddCartProductsMutation()
+	const [updateCartProducts, putResult] = useUpdateCartProductsMutation()
+	const [syncCartProducts, syncResult] = useSyncCartProductsMutation()
+	const [removeCartProduct, deleteResult] = useRemoveCartProductMutation()
+	const [clearCart, clearResult] = useClearCartMutation()
+
+	const loadCart = useCallback(async () => {
+		if (isAuthenticated) {
+			const { data: serverCartProducts } = useGetCartProductsQuery()
+
+			setCartProducts(serverCartProducts || [])
+		} else {
+			setCartProducts(getLocalCart())
+		}
+	}, [cartProducts, cartCount, session, status, isAuthenticated, hasMigrated])
+
+	const migrateCart = useCallback(async () => {
+		if (status !== 'authenticated' || hasMigrated.current) return
+
+		const { data: serverCartProducts } = useGetCartProductsQuery()
+
+		const localCart = getLocalCart()
+		if (!localCart.length) return
+
+		try {
+			const serverKeys = new Set(
+				serverCartProducts?.map(
+					item => `${item.productId}_${item.productVariantId}`
+				)
+			)
+
+			const toMigrate = localCart.filter(
+				localItem =>
+					!serverKeys.has(
+						`${localItem.productId}_${localItem.productVariantId}`
+					)
+			)
+
+			if (toMigrate.length > 0) {
+				await syncCartProducts(toMigrate)
+			}
+
+			localStorage.removeItem('cartProducts')
+			hasMigrated.current = true
+
+			await loadCart()
+		} catch (err) {
+			console.error('Cart migration failed:', err)
+		}
+	}, [session, status, isAuthenticated, hasMigrated])
+
+	useEffect(() => {
+		loadCart()
+	}, [isAuthenticated])
+
+	useEffect(() => {
+		migrateCart()
+	}, [status])
+
+	const addToCart: CartOperation = async (
+		productId,
+		productVariantId,
+		quantity,
+		maxAvailable,
+		itemId
+	) => {
+		const existingItem = cartProducts.find(
+			item =>
+				item.productId === productId &&
+				item.productVariantId === productVariantId
+		)
+
+		const currentQuantity = existingItem?.quantity ?? 0
+		const newTotalQuantity = currentQuantity + quantity
+
+		if (newTotalQuantity > maxAvailable) {
+			toast.error('Недостатньо товару')
+			throw new Error('Cannot add more than available stock.')
+		}
+
+		let updatedCart: ICartItem[]
+
+		if (existingItem) {
+			updatedCart = cartProducts.map(item =>
+				item.productId === productId &&
+				item.productVariantId === productVariantId
+					? { ...item, quantity: newTotalQuantity }
+					: item
+			)
+		} else {
+			updatedCart = [...cartProducts, { productId, productVariantId, quantity }]
+		}
+
+		setCartProducts(updatedCart)
+
+		if (isAuthenticated) {
+			try {
+				const addProductData = {
+					productId: productId,
+					productVariantId: productVariantId,
+					quantity: quantity,
+				}
+				const updateProductData = {
+					id: itemId!,
+					productVariantId: productVariantId,
+					quantity: newTotalQuantity,
+				}
+				if (existingItem) {
+					await updateCartProducts(updateProductData)
+				} else {
+					await addCartProducts(addProductData)
+				}
+				await loadCart()
+			} catch (err) {
+				console.error('Failed to sync with server:', err)
+				toast.error('Не вдалося синхронізувати з сервером')
+				setCartProducts(cartProducts)
+			}
+		} else {
+			saveLocalCart(updatedCart)
+		}
+
+		triggerAnimation({ setCount: setCartCount })
+		toast.success('Продукт додано')
+	}
+
+	const removeFromCart = async (
+		itemId: string | undefined,
+		productId: string,
+		variantId: string
+	) => {
+		if (!isAuthenticated) {
+			const filtered = cartProducts.filter(
+				item =>
+					!(item.productId === productId && item.productVariantId === variantId)
+			)
+			setCartProducts(filtered)
+			saveLocalCart(filtered)
+			triggerAnimation({ setCount: setCartCount })
+			return
+		}
+
+		try {
+			await removeCartProduct(itemId!)
+			const filtered = cartProducts.filter(item => item.id !== itemId)
+			setCartProducts(filtered)
+			triggerAnimation({ setCount: setCartCount })
+		} catch (err) {
+			console.error('Failed to remove cart item on server:', err)
+		}
+	}
+
+	const clearCartFn = async () => {
+		if (!isAuthenticated) {
+			setCartProducts([])
+			saveLocalCart([])
+			return
+		}
+
+		const cartIds = cartProducts
+			.map(item => item.id)
+			.filter((id): id is string => id !== undefined)
+
+		if (cartIds.length === 0) {
+			return
+		}
+
+		try {
+			await clearCart(cartIds)
+			setCartProducts([])
+		} catch (err) {
+			console.error('Failed to clear cart on server:', err)
+		}
+	}
+
+	const updateCartItem = async (
+		itemId: string | undefined,
+		productId: string,
+		oldVariantId: string,
+		newVariantId: string,
+		newQuantity: number
+	) => {
+		if (newQuantity <= 0) {
+			return removeFromCart(itemId, productId, oldVariantId)
+		}
+
+		if (!isAuthenticated) {
+			const updated = cartProducts.map(item =>
+				item.productId === productId && item.productVariantId === oldVariantId
+					? { ...item, productVariantId: newVariantId, quantity: newQuantity }
+					: item
+			)
+			setCartProducts(updated)
+			saveLocalCart(updated)
+			triggerAnimation({ setCount: setCartCount })
+			return
+		}
+
+		const updated = cartProducts.map(item =>
+			item.id === itemId
+				? { ...item, productVariantId: newVariantId, quantity: newQuantity }
+				: item
+		)
+		setCartProducts(updated)
+
+		try {
+			await updateCartProducts({
+				id: itemId!,
+				productVariantId: newVariantId,
+				quantity: newQuantity,
+			})
+		} catch (err) {
+			console.error('Failed to update cart item on server:', err)
+		}
+
+		await loadCart()
+		triggerAnimation({ setCount: setCartCount })
+	}
+
+	const isInCart = (productId: string) =>
+		cartProducts.some(item => item.productId === productId)
+	const isVariantInCart = (productId: string, variantId: string) =>
+		cartProducts.some(
+			item =>
+				item.productId === productId && item.productVariantId === variantId
+		)
+
+	return (
+		<CartContext.Provider
+			value={{
+				cartProducts,
+				addToCart,
+				removeFromCart,
+				clearCart: clearCartFn,
+				updateCartItem,
+				isInCart,
+				isVariantInCart,
+				cartCount,
+				triggerAnimation,
+			}}
+		>
+			{children}
+		</CartContext.Provider>
+	)
+}
+
+export const useCart = () => {
+	const context = useContext(CartContext)
+	if (!context) {
+		throw new Error('useCart must be used within CartProvider')
+	}
+	return context
+}

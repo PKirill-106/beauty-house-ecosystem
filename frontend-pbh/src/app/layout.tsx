@@ -2,6 +2,7 @@ import Footer from '@/components/layout/Footer'
 import Navbar from '@/components/layout/navbar/Navbar'
 import { ApiProvider } from '@/lib/api/apiClient'
 import { authOptions } from '@/lib/auth'
+import CartProvider from '@/providers/CartProvider'
 import ClientProvider from '@/providers/ClientProvider'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
@@ -40,6 +41,13 @@ export default async function RootLayout({
 					<Navbar />
 					<main>{children}</main>
 					<Footer />
+					<CartProvider>
+							<ApiProvider />
+							<Toaster position='top-center' />
+							<Navbar />
+							<main>{children}</main>
+							<Footer />
+					</CartProvider>
 				</ClientProvider>
 			</body>
 		</html>
