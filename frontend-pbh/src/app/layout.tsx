@@ -4,6 +4,7 @@ import { ApiProvider } from '@/lib/api/apiClient'
 import { authOptions } from '@/lib/auth'
 import CartProvider from '@/providers/CartProvider'
 import ClientProvider from '@/providers/ClientProvider'
+import { FavoritesProvider } from '@/providers/FavoritesProvider'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { Montserrat, Roboto } from 'next/font/google'
@@ -36,17 +37,14 @@ export default async function RootLayout({
 		<html lang='en'>
 			<body className={`${montserrat.variable} ${roboto.variable} antialiased`}>
 				<ClientProvider session={session}>
-					<ApiProvider />
-					<Toaster position='top-center' />
-					<Navbar />
-					<main>{children}</main>
-					<Footer />
 					<CartProvider>
+						<FavoritesProvider>
 							<ApiProvider />
 							<Toaster position='top-center' />
 							<Navbar />
 							<main>{children}</main>
 							<Footer />
+						</FavoritesProvider>
 					</CartProvider>
 				</ClientProvider>
 			</body>

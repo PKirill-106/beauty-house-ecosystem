@@ -1,43 +1,46 @@
 'use server'
 
+import { IProduct, ResponseType } from '@/types/interfacesApi'
 import { api } from '../api/axios'
+import { apiWrapper } from '../utils/api/helpers'
 
 export async function getAllProductsFromWishList() {
-	const { data } = await api
-		.get('/WhisList/GetAllProductsFromWishList')
-		.catch(error => {
-			throw new Error('Failed to fetch wishlist: ', error)
-		})
+	return apiWrapper(async () => {
+		const res: ResponseType<IProduct[]> = await api.get(
+			'/WhisList/GetAllProductsFromWishList'
+		)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function addProductToWishList(productId: string) {
-	const { data } = await api
-		.post(`/WhisList/AddProductToWishList?productId=${productId}`)
-		.catch(error => {
-			throw new Error('Failed to add to wishlist: ', error)
-		})
+	return apiWrapper(async () => {
+		const res: ResponseType<number> = await api.post(
+			`/WhisList/AddProductToWishList?productId=${productId}`
+		)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function updateWishList(wishlistItemIds: string[]) {
-	const { data } = await api
-		.put('/WhisList/UpdateWishList', JSON.stringify(wishlistItemIds))
-		.catch(error => {
-			throw new Error('Failed to update wishlist: ', error)
-		})
+	return apiWrapper(async () => {
+		const res: ResponseType<number> = await api.put(
+			'/WhisList/UpdateWishList',
+			JSON.stringify(wishlistItemIds)
+		)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function removeProductFromWishList(wishlistItemId: string) {
-	const { data } = await api
-		.delete(`/WhisList/RemoveWishList?whishListItemId=${wishlistItemId}`)
-		.catch(error => {
-			throw new Error('Failed to remove product from wishlist: ', error)
-		})
+	return apiWrapper(async () => {
+		const res: ResponseType<number> = await api.delete(
+			`/WhisList/RemoveWishList?whishListItemId=${wishlistItemId}`
+		)
 
-	return data.data
+		return res.data.data
+	})
 }

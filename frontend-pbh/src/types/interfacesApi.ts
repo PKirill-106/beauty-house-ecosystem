@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios'
 // Api
 export interface IResponseApi<T> {
 	data: T
@@ -140,13 +141,24 @@ export interface IUpdateBanner {
 	texts: string[]
 }
 
+//Favorites
+export interface IFavoritesContext {
+	favorites: string[]
+	addFavorite: (productId: string) => Promise<void>
+	removeFavorite: (productId: string) => Promise<void>
+	isFavorite: (productId: string) => boolean
+	favCount: number
+	triggerAnimation: ({ setCount }: ITriggerAnimation) => void
+}
+
 //Cart
 export interface ICartItem {
 	id?: string
-	addedAt?: string
 	productId: string
 	productVariantId: string
 	quantity: number
+	addedAt?: string
+}
 }
 
 // Discount and Season

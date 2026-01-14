@@ -4,7 +4,6 @@ import {
 	removeProductFromWishList,
 	updateWishList,
 } from '@/lib/services/wishlistService'
-import { apiWrapper } from '@/lib/utils/api/helpers'
 import { IProduct } from '@/types/interfacesApi'
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -14,22 +13,20 @@ export const wishlistApi = createApi({
 	tagTypes: ['Wishlist'],
 	endpoints: builder => ({
 		getWishlistProducts: builder.query<IProduct[], void>({
-			queryFn: async () => apiWrapper(() => getAllProductsFromWishList()),
+			queryFn: async () => getAllProductsFromWishList(),
 			providesTags: ['Wishlist'],
 		}),
-		addWishlistProduct: builder.mutation<IProduct[], IProduct['id']>({
-			queryFn: async productId =>
-				apiWrapper(() => addProductToWishList(productId)),
+		addWishlistProduct: builder.mutation<number, IProduct['id']>({
+			queryFn: async productId => addProductToWishList(productId),
 			invalidatesTags: ['Wishlist'],
 		}),
-		updateWishListProducts: builder.mutation<IProduct[], string[]>({
-			queryFn: async wishlistItemIds =>
-				apiWrapper(() => updateWishList(wishlistItemIds)),
+		updateWishListProducts: builder.mutation<number, string[]>({
+			queryFn: async wishlistItemIds => updateWishList(wishlistItemIds),
 			invalidatesTags: ['Wishlist'],
 		}),
-		removeWishListProduct: builder.mutation<IProduct[], string>({
+		removeWishListProduct: builder.mutation<number, string>({
 			queryFn: async wishlistItemId =>
-				apiWrapper(() => removeProductFromWishList(wishlistItemId)),
+				removeProductFromWishList(wishlistItemId),
 			invalidatesTags: ['Wishlist'],
 		}),
 	}),
