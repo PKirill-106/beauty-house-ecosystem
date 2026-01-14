@@ -1,4 +1,6 @@
 import { AxiosResponse } from 'axios'
+import { ITriggerAnimation } from './interfacesProps'
+
 // Api
 export interface IResponseApi<T> {
 	data: T
@@ -159,6 +161,35 @@ export interface ICartItem {
 	quantity: number
 	addedAt?: string
 }
+export type CartOperation = (
+	productId: string,
+	variantId: string,
+	quantity: number,
+	maxAvailable: number,
+	itemId?: string
+) => Promise<void>
+export interface ICartContext {
+	cartProducts: ICartItem[]
+	addToCart: CartOperation
+	removeFromCart: (
+		itemId: string,
+		productId: string,
+		variantId: string
+	) => Promise<void>
+	clearCart: () => void
+	updateCartItem: (
+		itemId: string | undefined,
+		productId: string,
+		oldVariantId: string,
+		productVariantId: string,
+		quantity: number,
+		unitsInStock?: number
+	) => Promise<void>
+
+	isInCart: (productId: string) => boolean
+	isVariantInCart: (productId: string, variantId: string) => boolean
+	cartCount: number
+	triggerAnimation: ({ setCount }: ITriggerAnimation) => void
 }
 
 // Discount and Season
