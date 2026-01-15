@@ -8,7 +8,6 @@ import {
 	updateOrder,
 	updateOrderToPaid,
 } from '@/lib/services/orderServices'
-import { apiWrapper } from '@/lib/utils/api/helpers'
 import { ICreateOrder, IOrder } from '@/types/interfacesApi'
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -18,33 +17,31 @@ export const orderApi = createApi({
 	tagTypes: ['Orders', 'MyOrders', 'Order'],
 	endpoints: builder => ({
 		getOrders: builder.query<IOrder[], void>({
-			queryFn: async () => apiWrapper(() => getAllOrders()),
+			queryFn: async () => getAllOrders(),
 		}),
 		getMyOrders: builder.query<IOrder[], void>({
-			queryFn: async () => apiWrapper(() => getMyOrders()),
+			queryFn: async () => getMyOrders(),
 		}),
-		getMyOrderById: builder.query<IOrder[], IOrder['id']>({
-			queryFn: async orderId => apiWrapper(() => getMyOrderById(orderId)),
+		getMyOrderById: builder.query<IOrder, IOrder['id']>({
+			queryFn: async orderId => getMyOrderById(orderId),
 		}),
-		createAuthOrder: builder.mutation<IOrder[], Partial<ICreateOrder>>({
-			queryFn: async orderData => apiWrapper(() => createAuthOrder(orderData)),
+		createAuthOrder: builder.mutation<boolean, Partial<ICreateOrder>>({
+			queryFn: async orderData => createAuthOrder(orderData),
 		}),
-		createGuestOrder: builder.mutation<IOrder[], Partial<ICreateOrder>>({
-			queryFn: async orderData => apiWrapper(() => createGuestOrder(orderData)),
+		createGuestOrder: builder.mutation<boolean, Partial<ICreateOrder>>({
+			queryFn: async orderData => createGuestOrder(orderData),
 		}),
-		cancelOrder: builder.mutation<IOrder[], IOrder['id']>({
-			queryFn: async orderId => apiWrapper(() => cancelOrder(orderId)),
+		cancelOrder: builder.mutation<boolean, IOrder['id']>({
+			queryFn: async orderId => cancelOrder(orderId),
 		}),
-		setOrderStatusAsPaid: builder.mutation<IOrder[], IOrder['orderNumber']>({
-			queryFn: async orderNumber =>
-				apiWrapper(() => updateOrderToPaid(orderNumber)),
+		setOrderStatusAsPaid: builder.mutation<boolean, IOrder['orderNumber']>({
+			queryFn: async orderNumber => updateOrderToPaid(orderNumber),
 		}),
 		updateOrderStatus: builder.mutation<
-			IOrder[],
+			boolean,
 			{ orderId: IOrder['id']; status: IOrder['status'] }
 		>({
-			queryFn: async ({ orderId, status }) =>
-				apiWrapper(() => updateOrder(orderId, status)),
+			queryFn: async ({ orderId, status }) => updateOrder(orderId, status),
 		}),
 	}),
 })
