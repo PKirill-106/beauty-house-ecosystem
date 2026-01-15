@@ -1,42 +1,42 @@
 'use server'
 
-import { IDeleteCategory } from '@/types/interfacesApi'
+import { ICategory, IDeleteCategory, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
+import { apiWrapper } from '../utils/api/helpers'
 
 export async function getAllCategories() {
-	const { data } = await api.get('/Category/GetAll').catch(error => {
-		throw new Error('Failed to fetch categories: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<ICategory[]> = await api.get('/Category/GetAll')
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function createCategory(formData: FormData) {
-	const { data } = await api.post('/Category/Create', formData).catch(error => {
-		throw new Error('Failed to create category: ', error)
-	})
+	return apiWrapper(async () => {
+		await api.post('/Category/Create', formData)
 
-	revalidatePath(`/admin/products`)
-	return data.data
+		revalidatePath(`/admin/products`)
+		return true
+	})
 }
 
 export async function updateCategory(formData: FormData) {
-	const { data } = await api.put('/Category/Update', formData).catch(error => {
-		throw new Error('Failed to update category', error)
-	})
+	return apiWrapper(async () => {
+		await api.put('/Category/Update', formData)
 
-	revalidatePath(`/admin/products`)
-	return data.data
+		revalidatePath(`/admin/products`)
+		return true
+	})
 }
 
 export async function deleteCategory(categoryDeleteData: IDeleteCategory) {
-	await api
-		.delete('/Category/Delete', { data: JSON.stringify(categoryDeleteData) })
-		.catch(error => {
-			throw new Error('Failed to delete category', error)
+	return apiWrapper(async () => {
+		await api.delete('/Category/Delete', {
+			data: JSON.stringify(categoryDeleteData),
 		})
-
-	revalidatePath(`/admin/products`)
-	return true
+		revalidatePath(`/admin/products`)
+		return true
+	})
 }

@@ -4,7 +4,6 @@ import {
 	getAllCategories,
 	updateCategory,
 } from '@/lib/services/categoryServices'
-import { apiWrapper } from '@/lib/utils/api/helpers'
 import { ICategory, IDeleteCategory } from '@/types/interfacesApi'
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -14,20 +13,19 @@ export const categoryApi = createApi({
 	tagTypes: ['Categories'],
 	endpoints: builder => ({
 		getCategories: builder.query<ICategory[], void>({
-			queryFn: async () => apiWrapper(() => getAllCategories()),
+			queryFn: async () => getAllCategories(),
 			providesTags: ['Categories'],
 		}),
-		createCategory: builder.mutation<ICategory, FormData>({
-			queryFn: async formData => apiWrapper(() => createCategory(formData)),
+		createCategory: builder.mutation<boolean, FormData>({
+			queryFn: async formData => createCategory(formData),
 			invalidatesTags: ['Categories'],
 		}),
-		updateCategory: builder.mutation<ICategory, FormData>({
-			queryFn: async formData => apiWrapper(() => updateCategory(formData)),
+		updateCategory: builder.mutation<boolean, FormData>({
+			queryFn: async formData => updateCategory(formData),
 			invalidatesTags: ['Categories'],
 		}),
 		deleteProduct: builder.mutation<boolean, IDeleteCategory>({
-			queryFn: async categoryDeleteData =>
-				apiWrapper(() => deleteCategory(categoryDeleteData)),
+			queryFn: async categoryDeleteData => deleteCategory(categoryDeleteData),
 			invalidatesTags: ['Categories'],
 		}),
 	}),
