@@ -5,7 +5,6 @@ import {
 	getSeasonBySlug,
 	updateSeason,
 } from '@/lib/services/seasonServices'
-import { apiWrapper } from '@/lib/utils/api/helpers'
 import { ISeason, ISeasonId } from '@/types/interfacesApi'
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -15,19 +14,19 @@ export const seasonApi = createApi({
 	tagTypes: ['Season'],
 	endpoints: builder => ({
 		getSeasons: builder.query<ISeason[], void>({
-			queryFn: async () => apiWrapper(() => getAllSeasons()),
+			queryFn: async () => getAllSeasons(),
 		}),
 		getSeasonById: builder.query<ISeason[], ISeason['id']>({
-			queryFn: async id => apiWrapper(() => getSeasonById(id)),
+			queryFn: async id => getSeasonById(id),
 		}),
 		getSeasonBySlug: builder.query<ISeason[], ISeason['slug']>({
-			queryFn: async slug => apiWrapper(() => getSeasonBySlug(slug)),
+			queryFn: async slug => getSeasonBySlug(slug),
 		}),
-		createSeason: builder.mutation<ISeason[], Omit<ISeasonId, 'id' | 'slug'>>({
-			queryFn: async seasonData => apiWrapper(() => createSeason(seasonData)),
+		createSeason: builder.mutation<boolean, Omit<ISeasonId, 'id' | 'slug'>>({
+			queryFn: async seasonData => createSeason(seasonData),
 		}),
-		updateSeason: builder.mutation<ISeason[], ISeasonId>({
-			queryFn: async seasonData => apiWrapper(() => updateSeason(seasonData)),
+		updateSeason: builder.mutation<boolean, ISeasonId>({
+			queryFn: async seasonData => updateSeason(seasonData),
 		}),
 	}),
 })

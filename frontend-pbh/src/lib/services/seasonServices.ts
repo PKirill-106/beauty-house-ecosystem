@@ -1,49 +1,44 @@
 'use server'
 
-import { ISeasonId } from '@/types/interfacesApi'
+import { ISeason, ISeasonId, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
+import { apiWrapper } from '../utils/api/helpers'
 
 export async function getAllSeasons() {
-	const { data } = await api.get('/Season/GetAll').catch(error => {
-		throw new Error('Failed to fetch seasons: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<ISeason[]> = await api.get('/Season/GetAll')
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function getSeasonById(id: string) {
-	const { data } = await api.get(`/Season/GetById?id=${id}`).catch(error => {
-		throw new Error('Failed to fetch season by id: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<ISeason> = await api.get(`/Season/GetById?id=${id}`)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function getSeasonBySlug(slug: string) {
-	const { data } = await api.get(`/Season/${slug}`).catch(error => {
-		throw new Error('Failed to fetch season by slug: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<ISeason> = await api.get(`/Season/${slug}`)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function createSeason(seasonData: Omit<ISeasonId, 'id' | 'slug'>) {
-	const { data } = await api
-		.post('/Season/Create', JSON.stringify(seasonData))
-		.catch(error => {
-			throw new Error('Failed to create season: ', error)
-		})
+	await api.post('/Season/Create', JSON.stringify(seasonData))
 
 	revalidatePath('/admin/seasons')
-	return data.data
+	return true
 }
 
 export async function updateSeason(seasonData: ISeasonId) {
-	const { data } = await api.put('/Season/Update', seasonData).catch(error => {
-		throw new Error('Failed to update season: ', error)
-	})
+	await api.put('/Season/Update', seasonData)
 
 	revalidatePath('/admin/seasons')
-	return data.data
+	return true
 }
