@@ -16,31 +16,26 @@ export async function getAllProductsFromWishList() {
 
 export async function addProductToWishList(productId: string) {
 	return apiWrapper(async () => {
-		const res: ResponseType<number> = await api.post(
-			`/WhisList/AddProductToWishList?productId=${productId}`
-		)
+		await api.post(`/WhisList/AddProductToWishList?productId=${productId}`)
 
-		return res.data.data
+		return true
 	})
 }
 
 export async function updateWishList(wishlistItemIds: string[]) {
 	return apiWrapper(async () => {
-		const res: ResponseType<number> = await api.put(
-			'/WhisList/UpdateWishList',
-			JSON.stringify(wishlistItemIds)
-		)
+		await api.put('/WhisList/UpdateWishList', JSON.stringify(wishlistItemIds))
 
-		return res.data.data
+		return true
 	})
 }
 
 export async function removeProductFromWishList(wishlistItemId: string) {
 	return apiWrapper(async () => {
-		const res: ResponseType<number> = await api.delete(
+		await api.delete(
 			`/WhisList/RemoveWishList?whishListItemId=${wishlistItemId}`
 		)
 
-		return res.data.data
+		return true
 	})
 }

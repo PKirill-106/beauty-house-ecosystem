@@ -16,15 +16,15 @@ export const wishlistApi = createApi({
 			queryFn: async () => getAllProductsFromWishList(),
 			providesTags: ['Wishlist'],
 		}),
-		addWishlistProduct: builder.mutation<number, IProduct['id']>({
+		addWishlistProduct: builder.mutation<boolean, IProduct['id']>({
 			queryFn: async productId => addProductToWishList(productId),
 			invalidatesTags: ['Wishlist'],
 		}),
-		updateWishListProducts: builder.mutation<number, string[]>({
+		updateWishListProducts: builder.mutation<boolean, string[]>({
 			queryFn: async wishlistItemIds => updateWishList(wishlistItemIds),
 			invalidatesTags: ['Wishlist'],
 		}),
-		removeWishListProduct: builder.mutation<number, string>({
+		removeWishListProduct: builder.mutation<boolean, string>({
 			queryFn: async wishlistItemId =>
 				removeProductFromWishList(wishlistItemId),
 			invalidatesTags: ['Wishlist'],
