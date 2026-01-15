@@ -1,23 +1,28 @@
 'use server'
 
+import { IBanner, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
+import { apiWrapper } from '../utils/api/helpers'
 
 export async function getBannerImages() {
-	const { data } = await api.get('/Banner/GetBannerImages').catch(error => {
-		throw new Error('Failed to fetch banners: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<IBanner[]> = await api.get(
+			'/Banner/GetBannerImages'
+		)
 
-	return data.data
+		return res.data.data
+	})
 }
 
-export async function updateBanner(formData: FormData) {
-	const { data } = await api
-		.put('/Banner/UpdateBanner', formData)
-		.catch(error => {
-			throw new Error('Failed to update banners: ', error)
-		})
+export async function updateBanners(formData: FormData) {
+	return apiWrapper(async () => {
+		const res: ResponseType<number> = await api.put(
+			'/Banner/UpdateBanner',
+			formData
+		)
 
-	revalidatePath(`/admin/banners/`)
-	return data.data
+		revalidatePath(`/admin/banners/`)
+		return res.data.data
+	})
 }
