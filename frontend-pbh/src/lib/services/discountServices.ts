@@ -1,45 +1,42 @@
 'use server'
 
+import { IDiscount, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
-import { IDiscount } from '@/types/interfacesApi'
+import { apiWrapper } from '../utils/api/helpers'
 
 export async function getAllDiscounts() {
-	const { data } = await api.get('/Discount/GetAll').catch(error => {
-		throw new Error('Failed to fetch discounts: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<IDiscount[]> = await api.get('/Discount/GetAll')
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function getDiscountById(id: string) {
-	const { data } = await api.get(`/Discount/${id}`).catch(error => {
-		throw new Error('Failed to fetch discount by id: ', error)
-	})
+	return apiWrapper(async () => {
+		const res: ResponseType<IDiscount> = await api.get(`/Discount/${id}`)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function createDiscount(
 	discountData: Omit<IDiscount, 'id' | 'slug'>
 ) {
-	const { data } = await api
-		.post('/Discount/Create', JSON.stringify(discountData))
-		.catch(error => {
-			throw new Error('Failed to create discount: ', error)
-		})
+	return apiWrapper(async () => {
+		await api.post('/Discount/Create', JSON.stringify(discountData))
 
-	revalidatePath(`/admin/discounts`)
-	return data.data
+		revalidatePath(`/admin/discounts`)
+		return true
+	})
 }
 
 export async function updateDiscount(discountDate: Omit<IDiscount, 'slug'>) {
-	const { data } = await api
-		.put('Discount/Update', JSON.stringify(discountDate))
-		.catch(error => {
-			throw new Error('Failed to update discount: ', error)
-		})
+	return apiWrapper(async () => {
+		await api.put('Discount/Update', JSON.stringify(discountDate))
 
-	revalidatePath(`/admin/discounts`)
-	return data.data
+		revalidatePath(`/admin/discounts`)
+		return true
+	})
 }
