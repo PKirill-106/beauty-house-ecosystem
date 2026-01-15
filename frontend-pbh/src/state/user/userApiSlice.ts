@@ -5,8 +5,7 @@ import {
 	signUpUser,
 	updateUserInfo,
 } from '@/lib/services/userServices'
-import { apiWrapper } from '@/lib/utils/api/helpers'
-import { IAuth, IUserInfo } from '@/types/interfacesApi'
+import { IAuth, IAuthResponse, IUserInfo } from '@/types/interfacesApi'
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
@@ -14,28 +13,31 @@ export const userApi = createApi({
 	baseQuery: fakeBaseQuery(),
 	tagTypes: ['User'],
 	endpoints: builder => ({
-		getUser: builder.query<IUserInfo[], void>({
-			queryFn: async () => apiWrapper(() => getUserInfo()),
+		getUser: builder.query<IUserInfo, void>({
+			queryFn: async () => getUserInfo(),
 			providesTags: ['User'],
 		}),
-		updateUser: builder.mutation<IUserInfo[], Partial<IUserInfo>>({
-			queryFn: async userData => apiWrapper(() => updateUserInfo(userData)),
+		updateUser: builder.mutation<boolean, Partial<IUserInfo>>({
+			queryFn: async userData => updateUserInfo(userData),
 			invalidatesTags: ['User'],
 		}),
-		signInUser: builder.mutation<any, { email: string; password: string }>({
-			queryFn: async credentials => apiWrapper(() => signInUser(credentials)),
+		signInUser: builder.mutation<
+			IAuthResponse,
+			{ email: string; password: string }
+		>({
+			queryFn: async credentials => signInUser(credentials),
 			invalidatesTags: ['User'],
 		}),
-		signUpUser: builder.mutation<any, IAuth>({
-			queryFn: async userData => apiWrapper(() => signUpUser(userData)),
+		signUpUser: builder.mutation<boolean, IAuth>({
+			queryFn: async userData => signUpUser(userData),
 			invalidatesTags: ['User'],
 		}),
 		logout: builder.mutation<
-			any,
+			boolean,
 			{ accessToken: string; refreshToken: string }
 		>({
 			queryFn: async ({ accessToken, refreshToken }) =>
-				apiWrapper(() => logout(accessToken, refreshToken)),
+				logout(accessToken, refreshToken),
 			invalidatesTags: ['User'],
 		}),
 	}),

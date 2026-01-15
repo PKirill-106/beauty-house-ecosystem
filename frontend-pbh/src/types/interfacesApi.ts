@@ -12,6 +12,12 @@ export type ResponseType<T> = AxiosResponse<IResponseApi<T>>
 export type ErrorType = { status: string | number; message: string }
 
 // User
+export interface IAuthResponse {
+	email: string
+	accessToken: string
+	refreshToken: string
+	expiresAt: string
+}
 export interface IAuth {
 	email: string
 	password: string
