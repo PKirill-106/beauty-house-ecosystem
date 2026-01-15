@@ -18,23 +18,23 @@ export const cartApi = createApi({
 			queryFn: async () => getAllProductsFromCart(),
 			providesTags: ['Cart'],
 		}),
-		addCartProducts: builder.mutation<ICartItem[], Partial<ICartItem>>({
+		addCartProducts: builder.mutation<boolean, Partial<ICartItem>>({
 			queryFn: async productData => addProductToCart(productData),
 			invalidatesTags: ['Cart'],
 		}),
-		updateCartProducts: builder.mutation<ICartItem[], Partial<ICartItem>>({
+		updateCartProducts: builder.mutation<boolean, Partial<ICartItem>>({
 			queryFn: async productData => updateProductInCart(productData),
 			invalidatesTags: ['Cart'],
 		}),
-		syncCartProducts: builder.mutation<ICartItem[], ICartItem[]>({
+		syncCartProducts: builder.mutation<boolean, ICartItem[]>({
 			queryFn: async cartItems => migrateProductToCart(cartItems),
 			invalidatesTags: ['Cart'],
 		}),
-		removeCartProduct: builder.mutation<number, ICartItem['productId']>({
+		removeCartProduct: builder.mutation<boolean, ICartItem['productId']>({
 			queryFn: async itemId => removeProductFromCart(itemId),
 			invalidatesTags: ['Cart'],
 		}),
-		clearCart: builder.mutation<number, ICartItem['productId'][]>({
+		clearCart: builder.mutation<boolean, ICartItem['productId'][]>({
 			queryFn: async itemIds => removeManyProductFromCart(itemIds),
 			invalidatesTags: ['Cart'],
 		}),
