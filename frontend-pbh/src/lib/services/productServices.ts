@@ -26,13 +26,10 @@ export async function createProduct(
 	slug: string | undefined
 ) {
 	return apiWrapper(async () => {
-		const res: ResponseType<number> = await api.post(
-			'/Product/Create',
-			formData
-		)
+		await api.post('/Product/Create', formData)
 
 		revalidatePath(`/admin/products/${slug}`)
-		return res.data.data
+		return true
 	})
 }
 
@@ -41,10 +38,10 @@ export async function updateProduct(
 	slug: string | undefined
 ) {
 	return apiWrapper(async () => {
-		const res: ResponseType<number> = await api.put('/Product/Update', formData)
+		await api.put('/Product/Update', formData)
 
 		revalidatePath(`/admin/products/${slug}`)
-		return res.data.data
+		return true
 	})
 }
 
@@ -53,15 +50,12 @@ export async function deleteProduct(
 	slug: string | undefined
 ) {
 	return apiWrapper(async () => {
-		const res: ResponseType<number> = await api.delete(
-			`Product/Delete?id=${productId}`,
-			{
-				data: JSON.stringify(productId),
-			}
-		)
+		await api.delete(`Product/Delete?id=${productId}`, {
+			data: JSON.stringify(productId),
+		})
 
 		revalidatePath(`/admin/products/${slug}`)
-		return res.data.data
+		return true
 	})
 }
 

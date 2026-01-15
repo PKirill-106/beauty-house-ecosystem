@@ -24,21 +24,21 @@ export const productApi = createApi({
 			providesTags: (_, __, slug) => [{ type: 'Product', id: slug }],
 		}),
 		createProduct: builder.mutation<
-			number,
+			boolean,
 			{ formData: FormData; slug: IProduct['slug'] }
 		>({
 			queryFn: async ({ formData, slug }) => createProduct(formData, slug),
 			invalidatesTags: ['Products'],
 		}),
 		updateProduct: builder.mutation<
-			number,
+			boolean,
 			{ formData: FormData; slug: IProduct['slug'] }
 		>({
 			queryFn: async ({ formData, slug }) => updateProduct(formData, slug),
 			invalidatesTags: ['Products'],
 		}),
 		deleteProduct: builder.mutation<
-			number,
+			boolean,
 			{ id: IProduct['id']; slug: IProduct['slug'] }
 		>({
 			queryFn: async ({ id, slug }) => deleteProduct(id, slug),
