@@ -1,32 +1,31 @@
 'use server'
 
-import { ICreateReview } from '@/types/interfacesApi'
-import { api} from '../api/axios'
+import { ICreateReview, IReview, ResponseType } from '@/types/interfacesApi'
+import { api } from '../api/axios'
+import { apiWrapper } from '../utils/api/helpers'
 
 export async function getAllReviews(productId: string) {
-	const { data } = await api
-		.get(`/Review/all/${productId}`)
-		.catch(error => {
-			throw new Error('Failed to fetch reviews: ', error)
-		})
+	return apiWrapper(async () => {
+		const res: ResponseType<IReview[]> = await api.get(
+			`/Review/all/${productId}`
+		)
 
-	return data.data
+		return res.data.data
+	})
 }
 
 export async function createReview(reviewData: ICreateReview) {
-	const { data } = await api
-		.post('/Review/create', JSON.stringify(reviewData))
-		.catch(error => {
-			throw new Error('Failed to create review: ', error)
-		})
+	return apiWrapper(async () => {
+		await api.post('/Review/create', JSON.stringify(reviewData))
 
-	return data.data
+		return true
+	})
 }
 
 export async function deleteReview(reviewId: string) {
-	await api.delete(`/Review/${reviewId}`).catch(error => {
-		throw new Error('Failed to delete review: ', error)
-	})
+	return apiWrapper(async () => {
+		await api.delete(`/Review/${reviewId}`)
 
-	return true
+		return true
+	})
 }
