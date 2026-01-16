@@ -25,11 +25,16 @@ export const authOptions: AuthOptions = {
 
 				const response = await signInUser(credentials)
 
-				if (!response?.accessToken) return null
+				if ('error' in response) {
+					console.error('Login error: ', response.error)
+					return null
+				}
+
+				if (!response?.data.accessToken) return null
 
 				let decoded: DecodedJwt
 				try {
-					decoded = jwtDecode(response.accessToken)
+					decoded = jwtDecode(response.data.accessToken)
 				} catch {
 					console.error('Decode error JWT')
 					return null
@@ -42,15 +47,15 @@ export const authOptions: AuthOptions = {
 						decoded[
 							'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
 						] ||
-						response.email,
+						response.data.email,
 					role:
 						decoded[
 							'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
 						] || 'user',
-					accessToken: response.accessToken,
-					refreshToken: response.refreshToken,
+					accessToken: response.data.accessToken,
+					refreshToken: response.data.refreshToken,
 					expiresAt:
-						response.expiresAt ||
+						response.data.expiresAt ||
 						new Date((decoded.exp || 0) * 1000).toISOString(),
 				}
 			},

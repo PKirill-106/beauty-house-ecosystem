@@ -63,18 +63,18 @@ export async function updateUserInfo(userData: Partial<IUserInfo>) {
 }
 
 export async function refreshTokens(accessToken: string, refreshToken: string) {
-	return apiWrapper(async () => {
-		const res: ResponseType<Omit<IAuthResponse, 'email'>> = await api.put(
-			'/User/RefreshToken',
-			JSON.stringify({ accessToken, refreshToken })
-		)
+	const { data } = await api
+		.put('/User/RefreshToken', JSON.stringify({ accessToken, refreshToken }))
+		.catch(error => {
+			console.error('[refreshTokens] Error:', error)
+			throw new Error(error)
+		})
 
-		return {
-			accessToken: res.data.data.accessToken,
-			refreshToken: res.data.data.refreshToken || refreshToken,
-			expiresAt:
-				res.data.data.expiresAt ||
-				new Date(Date.now() + 15 * 60 * 1000).toISOString(),
-		}
-	})
+	return {
+		accessToken: data.data.accessToken,
+		refreshToken: data.data.refreshToken || refreshToken,
+		expiresAt:
+			data.data.expiresAt ||
+			new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+	}
 }

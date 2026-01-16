@@ -30,15 +30,19 @@ export async function getSeasonBySlug(slug: string) {
 }
 
 export async function createSeason(seasonData: Omit<ISeasonId, 'id' | 'slug'>) {
-	await api.post('/Season/Create', JSON.stringify(seasonData))
+	return apiWrapper(async () => {
+		await api.post('/Season/Create', JSON.stringify(seasonData))
 
-	revalidatePath('/admin/seasons')
-	return true
+		revalidatePath('/admin/seasons')
+		return true
+	})
 }
 
 export async function updateSeason(seasonData: ISeasonId) {
-	await api.put('/Season/Update', seasonData)
+	return apiWrapper(async () => {
+		await api.put('/Season/Update', seasonData)
 
-	revalidatePath('/admin/seasons')
-	return true
+		revalidatePath('/admin/seasons')
+		return true
+	})
 }

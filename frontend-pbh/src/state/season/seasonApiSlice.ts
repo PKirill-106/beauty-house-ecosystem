@@ -16,10 +16,10 @@ export const seasonApi = createApi({
 		getSeasons: builder.query<ISeason[], void>({
 			queryFn: async () => getAllSeasons(),
 		}),
-		getSeasonById: builder.query<ISeason[], ISeason['id']>({
+		getSeasonById: builder.query<ISeason, ISeason['id']>({
 			queryFn: async id => getSeasonById(id),
 		}),
-		getSeasonBySlug: builder.query<ISeason[], ISeason['slug']>({
+		getSeasonBySlug: builder.query<ISeason, ISeason['slug']>({
 			queryFn: async slug => getSeasonBySlug(slug),
 		}),
 		createSeason: builder.mutation<boolean, Omit<ISeasonId, 'id' | 'slug'>>({
