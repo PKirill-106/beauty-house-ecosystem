@@ -2,14 +2,11 @@
 
 import { useCart } from '@/providers/CartProvider'
 import { useFavorites } from '@/providers/FavoritesProvider'
-import { INavCounterWrapper } from '@/types/interfacesProps'
+import { ICounterWrapper } from '@/types/interfacesProps'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 
-export default function NavCounterWrapper({
-	children,
-	type,
-}: INavCounterWrapper) {
+export default function CounterWrapper({ children, type }: ICounterWrapper) {
 	const { favorites } = useFavorites()
 	const { cartProducts } = useCart()
 
@@ -37,7 +34,7 @@ export default function NavCounterWrapper({
 				{products!.length > 0 && (
 					<motion.div
 						key='count'
-						className='absolute -bottom-3 left-3 md:left-auto md:-bottom-2 md:-right-2 bg-accent text-white text-[10px] md:text-xs rounded-full w-4 md:w-5 h-4 md:h-5 flex items-center justify-center'
+						className='absolute -bottom-3 left-3 md:left-auto md:-bottom-2 md:-right-2 bg-primary text-white text-[10px] md:text-xs rounded-full w-4 md:w-5 h-4 md:h-5 flex items-center justify-center'
 						initial={{ scale: 0 }}
 						animate={{ scale: 1 }}
 						exit={{ scale: 0 }}

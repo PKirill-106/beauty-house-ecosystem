@@ -167,10 +167,10 @@ body::-webkit-scrollbar-thumb {
 		@apply w-full mx-auto py-2 px-4;
 	}
 	.link-size {
-		@apply h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 xl:h-9 xl:w-9;
+		@apply h-5 w-5 lg:h-6 lg:w-6;
 	}
 	.link-hover {
-		@apply hover:text-primary active:text-primary hover:scale-125 duration-300 transition-all;
+		@apply hover:text-primary active:text-primary hover:scale-110 active:scale-110 duration-300 transition-all cursor-pointer;
 	}
 }
 

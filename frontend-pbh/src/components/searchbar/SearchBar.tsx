@@ -21,7 +21,7 @@ export default function SearchBar() {
 	} = useSearch(products)
 
 	return (
-		<div className='flex flex-col flex-1'>
+		<div className='flex flex-col flex-3 md:flex-1'>
 			<SearchInput
 				inputRef={inputRef}
 				setIsOpen={setIsOpen}

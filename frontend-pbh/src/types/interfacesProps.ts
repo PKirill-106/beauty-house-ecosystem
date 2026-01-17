@@ -9,11 +9,6 @@ export interface IMyTooltip {
 	element: string | ReactNode
 	tip: string
 }
-export interface IBurgerMenu {
-	menuRef: RefObject<HTMLInputElement | null>
-	isOpen: boolean
-	setIsOpen: Dispatch<SetStateAction<boolean>>
-}
 export interface ISearchInput {
 	inputRef: RefObject<HTMLInputElement | null>
 	setIsOpen: Dispatch<SetStateAction<boolean>>
@@ -21,7 +16,7 @@ export interface ISearchInput {
 	setSearchValue: Dispatch<SetStateAction<string>>
 	handleClear: () => void
 }
-export interface INavCounterWrapper {
+export interface ICounterWrapper {
 	children: React.ReactNode
 	type: 'favorites' | 'cart'
 }
