@@ -5,14 +5,14 @@ WORKDIR /app
 
 # Establish dependencies
 COPY package*.json ./
-RUN npm install
+RUN pnpm install
 
 # Copy project
 COPY . .
 
 # Build project
 ENV NODE_ENV=production
-RUN npm run build
+RUN pnpm run build
 
 EXPOSE 3000
 
