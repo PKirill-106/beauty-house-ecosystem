@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import useClickoutside from '@/hooks/useClickOutside'
-import { getProfileLink } from '@/lib/utils/api/helpers'
+import { getProfileLink } from '@/lib/utils/helpers'
 import { Heart, Menu, User, X } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'

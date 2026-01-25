@@ -3,7 +3,7 @@
 import { IProduct, IProductColor, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getProducts() {
 	return apiWrapper(async () => {
@@ -23,7 +23,7 @@ export async function getProductBySlug(slug: string) {
 
 export async function createProduct(
 	formData: FormData,
-	slug: string | undefined
+	slug: string | undefined,
 ) {
 	return apiWrapper(async () => {
 		await api.post('/Product/Create', formData)
@@ -35,7 +35,7 @@ export async function createProduct(
 
 export async function updateProduct(
 	formData: FormData,
-	slug: string | undefined
+	slug: string | undefined,
 ) {
 	return apiWrapper(async () => {
 		await api.put('/Product/Update', formData)
@@ -47,7 +47,7 @@ export async function updateProduct(
 
 export async function deleteProduct(
 	productId: IProduct['id'],
-	slug: string | undefined
+	slug: string | undefined,
 ) {
 	return apiWrapper(async () => {
 		await api.delete(`Product/Delete?id=${productId}`, {
@@ -62,7 +62,7 @@ export async function deleteProduct(
 export async function getAllColors() {
 	return apiWrapper(async () => {
 		const res: ResponseType<IProductColor[]> = await api.get(
-			'/Product/GetAllColors'
+			'/Product/GetAllColors',
 		)
 
 		return res.data.data

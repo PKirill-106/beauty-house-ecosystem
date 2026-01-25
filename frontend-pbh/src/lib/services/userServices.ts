@@ -8,7 +8,7 @@ import {
 } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function signUpUser(userData: IAuth) {
 	return apiWrapper(async () => {
@@ -25,7 +25,7 @@ export async function signInUser(credentials: {
 	return apiWrapper(async () => {
 		const res: ResponseType<Omit<IAuthResponse, 'email'>> = await api.post(
 			'/User/Login',
-			JSON.stringify(credentials)
+			JSON.stringify(credentials),
 		)
 
 		return {

@@ -3,7 +3,7 @@
 import { ISeason, ISeasonId, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getAllSeasons() {
 	return apiWrapper(async () => {

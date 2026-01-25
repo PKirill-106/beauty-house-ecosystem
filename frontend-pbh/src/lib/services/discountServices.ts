@@ -3,7 +3,7 @@
 import { IDiscount, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getAllDiscounts() {
 	return apiWrapper(async () => {
@@ -22,7 +22,7 @@ export async function getDiscountById(id: string) {
 }
 
 export async function createDiscount(
-	discountData: Omit<IDiscount, 'id' | 'slug'>
+	discountData: Omit<IDiscount, 'id' | 'slug'>,
 ) {
 	return apiWrapper(async () => {
 		await api.post('/Discount/Create', JSON.stringify(discountData))

@@ -3,7 +3,7 @@
 import { ICategory, IDeleteCategory, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getAllCategories() {
 	return apiWrapper(async () => {

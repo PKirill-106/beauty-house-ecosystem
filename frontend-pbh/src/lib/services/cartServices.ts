@@ -1,12 +1,12 @@
 'use server'
 import { ICartItem, ResponseType } from '@/types/interfacesApi'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getAllProductsFromCart() {
 	return apiWrapper(async () => {
 		const res: ResponseType<ICartItem[]> = await api.get(
-			'/CartItem/GetAllCartProducts'
+			'/CartItem/GetAllCartProducts',
 		)
 
 		return res.data.data

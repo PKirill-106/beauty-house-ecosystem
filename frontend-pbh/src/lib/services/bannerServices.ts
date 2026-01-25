@@ -3,12 +3,12 @@
 import { IBanner, ResponseType } from '@/types/interfacesApi'
 import { revalidatePath } from 'next/cache'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getBannerImages() {
 	return apiWrapper(async () => {
 		const res: ResponseType<IBanner[]> = await api.get(
-			'/Banner/GetBannerImages'
+			'/Banner/GetBannerImages',
 		)
 
 		return res.data.data
@@ -19,7 +19,7 @@ export async function updateBanners(formData: FormData) {
 	return apiWrapper(async () => {
 		const res: ResponseType<number> = await api.put(
 			'/Banner/UpdateBanner',
-			formData
+			formData,
 		)
 
 		revalidatePath(`/admin/banners/`)

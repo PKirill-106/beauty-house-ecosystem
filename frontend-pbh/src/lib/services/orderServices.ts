@@ -2,7 +2,7 @@
 
 import { ICreateOrder, IOrder, ResponseType } from '@/types/interfacesApi'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getAllOrders() {
 	return apiWrapper(async () => {

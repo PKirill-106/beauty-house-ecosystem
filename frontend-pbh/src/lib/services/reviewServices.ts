@@ -2,12 +2,12 @@
 
 import { ICreateReview, IReview, ResponseType } from '@/types/interfacesApi'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getAllReviews(productId: string) {
 	return apiWrapper(async () => {
 		const res: ResponseType<IReview[]> = await api.get(
-			`/Review/all/${productId}`
+			`/Review/all/${productId}`,
 		)
 
 		return res.data.data

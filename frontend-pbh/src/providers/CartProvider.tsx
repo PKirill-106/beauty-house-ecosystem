@@ -1,6 +1,6 @@
 'use client'
 
-import { triggerAnimation } from '@/lib/utils/api/helpers'
+import { triggerAnimation } from '@/lib/utils/helpers'
 import { getLocalCart, saveLocalCart } from '@/lib/utils/locals/localCart'
 import {
 	useAddCartProductsMutation,
@@ -63,15 +63,15 @@ export default function CartProvider({
 		try {
 			const serverKeys = new Set(
 				serverCartProducts?.map(
-					item => `${item.productId}_${item.productVariantId}`
-				)
+					item => `${item.productId}_${item.productVariantId}`,
+				),
 			)
 
 			const toMigrate = localCart.filter(
 				localItem =>
 					!serverKeys.has(
-						`${localItem.productId}_${localItem.productVariantId}`
-					)
+						`${localItem.productId}_${localItem.productVariantId}`,
+					),
 			)
 
 			if (toMigrate.length > 0) {
@@ -100,12 +100,12 @@ export default function CartProvider({
 		productVariantId,
 		quantity,
 		maxAvailable,
-		itemId
+		itemId,
 	) => {
 		const existingItem = cartProducts.find(
 			item =>
 				item.productId === productId &&
-				item.productVariantId === productVariantId
+				item.productVariantId === productVariantId,
 		)
 
 		const currentQuantity = existingItem?.quantity ?? 0
@@ -123,7 +123,7 @@ export default function CartProvider({
 				item.productId === productId &&
 				item.productVariantId === productVariantId
 					? { ...item, quantity: newTotalQuantity }
-					: item
+					: item,
 			)
 		} else {
 			updatedCart = [...cartProducts, { productId, productVariantId, quantity }]
@@ -165,12 +165,14 @@ export default function CartProvider({
 	const removeFromCart = async (
 		itemId: string | undefined,
 		productId: string,
-		variantId: string
+		variantId: string,
 	) => {
 		if (!isAuthenticated) {
 			const filtered = cartProducts.filter(
 				item =>
-					!(item.productId === productId && item.productVariantId === variantId)
+					!(
+						item.productId === productId && item.productVariantId === variantId
+					),
 			)
 			setCartProducts(filtered)
 			saveLocalCart(filtered)
@@ -216,7 +218,7 @@ export default function CartProvider({
 		productId: string,
 		oldVariantId: string,
 		newVariantId: string,
-		newQuantity: number
+		newQuantity: number,
 	) => {
 		if (newQuantity <= 0) {
 			return removeFromCart(itemId, productId, oldVariantId)
@@ -226,7 +228,7 @@ export default function CartProvider({
 			const updated = cartProducts.map(item =>
 				item.productId === productId && item.productVariantId === oldVariantId
 					? { ...item, productVariantId: newVariantId, quantity: newQuantity }
-					: item
+					: item,
 			)
 			setCartProducts(updated)
 			saveLocalCart(updated)
@@ -237,7 +239,7 @@ export default function CartProvider({
 		const updated = cartProducts.map(item =>
 			item.id === itemId
 				? { ...item, productVariantId: newVariantId, quantity: newQuantity }
-				: item
+				: item,
 		)
 		setCartProducts(updated)
 
@@ -260,7 +262,7 @@ export default function CartProvider({
 	const isVariantInCart = (productId: string, variantId: string) =>
 		cartProducts.some(
 			item =>
-				item.productId === productId && item.productVariantId === variantId
+				item.productId === productId && item.productVariantId === variantId,
 		)
 
 	return (

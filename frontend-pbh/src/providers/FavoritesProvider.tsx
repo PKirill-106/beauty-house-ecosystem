@@ -1,6 +1,6 @@
 'use client'
 
-import { triggerAnimation } from '@/lib/utils/api/helpers'
+import { triggerAnimation } from '@/lib/utils/helpers'
 import {
 	getLocalFavorites,
 	saveLocalFavorites,
@@ -62,7 +62,7 @@ export const FavoritesProvider = ({
 				serverFavorites?.map((product: IProduct) => product.id) || []
 
 			const toMigrate = localFavorites.filter(
-				id => !serverProductIds.includes(id)
+				id => !serverProductIds.includes(id),
 			)
 
 			if (!toMigrate.length) {

@@ -2,12 +2,12 @@
 
 import { IProduct, ResponseType } from '@/types/interfacesApi'
 import { api } from '../api/axios'
-import { apiWrapper } from '../utils/api/helpers'
+import { apiWrapper } from '../utils/api/apiHelpers'
 
 export async function getAllProductsFromWishList() {
 	return apiWrapper(async () => {
 		const res: ResponseType<IProduct[]> = await api.get(
-			'/WhisList/GetAllProductsFromWishList'
+			'/WhisList/GetAllProductsFromWishList',
 		)
 
 		return res.data.data
@@ -33,7 +33,7 @@ export async function updateWishList(wishlistItemIds: string[]) {
 export async function removeProductFromWishList(wishlistItemId: string) {
 	return apiWrapper(async () => {
 		await api.delete(
-			`/WhisList/RemoveWishList?whishListItemId=${wishlistItemId}`
+			`/WhisList/RemoveWishList?whishListItemId=${wishlistItemId}`,
 		)
 
 		return true
