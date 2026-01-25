@@ -1,3 +1,5 @@
-export default function CategoryItem() {
-	return <div>CategoryItem</div>
+import { ICategoryItem } from "@/types/interfacesProps";
+
+export default function CategoryItem(props: ICategoryItem) {
+	return <div>{props.catName}</div>
 }

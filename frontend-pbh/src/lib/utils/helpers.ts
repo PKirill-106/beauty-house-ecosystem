@@ -1,3 +1,4 @@
+import { ICategory } from '@/types/interfacesApi'
 import { IGetProfileLink, ITriggerAnimation } from '@/types/interfacesProps'
 
 export const getProfileLink = ({ role, status }: IGetProfileLink) => {
@@ -7,6 +8,9 @@ export const getProfileLink = ({ role, status }: IGetProfileLink) => {
 	}
 
 	return profileHref
+}
+export const getSubcategories = (categories: ICategory[], parentId: string) => {
+	return categories.filter(cat => cat.parentCategoryId === parentId)
 }
 export const triggerAnimation = ({ setCount }: ITriggerAnimation) => {
 	setCount(prev => prev + 1)

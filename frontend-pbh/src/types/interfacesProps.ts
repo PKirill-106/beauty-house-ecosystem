@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
+import { ICategory } from './interfacesApi'
 
 export interface ILogo {
 	type: 'light' | 'dark'
@@ -30,4 +31,9 @@ export interface ITriggerAnimation {
 export interface ICategoryList {
 	style?: string
 	isFooter?: boolean
+}
+export interface ICategoryItem {
+	catName: ICategory['name']
+	subCatList: ICategory[] | null
+	showSubCat?: boolean
 }

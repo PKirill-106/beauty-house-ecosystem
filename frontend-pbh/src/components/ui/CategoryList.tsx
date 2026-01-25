@@ -2,19 +2,34 @@
 import { ICategoryList } from '@/types/interfacesProps'
 import CategoryItem from './CategoryItem'
 import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
+import { getSubcategories } from '@/lib/utils/helpers'
+import { Skeleton } from './skeleton'
 
 export default function CategoryList(props: ICategoryList) {
-	const { data: categories } = useGetCategoriesQuery()
+	const { data: categories, isLoading, isError } = useGetCategoriesQuery()
 
-	if (!categories) return <p>Категорії відсутні</p>
+	if (!categories && !isLoading && !isError) {
+		return <p>Категорії відсутні</p>
+	} else if (isError) {
+		return <p>Сталася Помилка</p>
+	}
 
 	return (
 		<ul className={props.style}>
-			{categories
-				.filter(category => category.parentCategoryId == null)
-				.map(category => (
-					<CategoryItem key={category.id} />
-				))}
+			{isLoading
+				? [...Array(6)].map((_, id) => (
+						<Skeleton key={id} className='w-full h-4 bg-neutral-800' />
+					))
+				: categories
+						.filter(category => category.parentCategoryId == null)
+						.map(category => (
+							<CategoryItem
+								key={category.id}
+								catName={category.name}
+								subCatList={getSubcategories(categories!, category.id)}
+								showSubCat={false}
+							/>
+						))}
 		</ul>
 	)
 }
