@@ -14,7 +14,7 @@ export default function Footer() {
 			text: '093 541 20 30',
 		},
 		{
-			href: 'mailto:m.in.m.nails@gmail.com',
+			href: 'mailto:beauty.house.cv@gmail.com',
 			text: 'beauty.house.cv@gmail.com',
 		},
 	]
@@ -70,13 +70,13 @@ export default function Footer() {
 					<div className='flex-1 hidden md:block'>
 						<h3 className='font-bold'>Каталог</h3>
 						<CategoryList
-							style='flex flex-col gap-5 py-4 font-light text-sm md:text-base lg:text-lg xl:text-xl'
+							style='flex flex-col gap-5 py-4 list-size'
 							isFooter={true}
 						/>
 					</div>
 					<div className='flex-1'>
 						<h3 className='font-bold'>Про Beauty House</h3>
-						<ul className='flex flex-col gap-5 py-4 font-light text-sm md:text-base lg:text-lg xl:text-xl'>
+						<ul className='flex flex-col gap-5 py-4 list-size'>
 							{pagesList.map(page => (
 								<li key={page.link} className='li-hover'>
 									<Link href={page.link}>{page.name}</Link>

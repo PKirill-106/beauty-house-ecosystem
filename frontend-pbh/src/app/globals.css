@@ -180,6 +180,9 @@ body::-webkit-scrollbar-thumb {
 	.main-section {
 		@apply flex-1;
 	}
+	.list-size {
+		@apply text-xs md:text-sm lg:text-base font-light;
+	}
 }
 
 .dark {
