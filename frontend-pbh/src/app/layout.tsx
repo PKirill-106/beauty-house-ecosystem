@@ -1,4 +1,4 @@
-import Footer from '@/components/layout/Footer'
+import Footer from '@/components/layout/footer/Footer'
 import Navbar from '@/components/layout/navbar/Navbar'
 import { ApiProvider } from '@/lib/api/apiClient'
 import { authOptions } from '@/lib/auth'
@@ -41,9 +41,11 @@ export default async function RootLayout({
 						<FavoritesProvider>
 							<ApiProvider />
 							<Toaster position='top-center' />
-							<Navbar />
-							<main>{children}</main>
-							<Footer />
+							<div className='min-h-screen flex flex-col'>
+								<Navbar />
+								<main className='main-section'>{children}</main>
+								<Footer />
+							</div>
 						</FavoritesProvider>
 					</CartProvider>
 				</ClientProvider>
