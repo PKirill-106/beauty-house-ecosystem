@@ -27,3 +27,7 @@ export interface IGetProfileLink {
 export interface ITriggerAnimation {
 	setCount: Dispatch<SetStateAction<number>>
 }
+export interface ICategoryList {
+	style?: string
+	isFooter?: boolean
+}
