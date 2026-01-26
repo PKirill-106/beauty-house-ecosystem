@@ -17,8 +17,8 @@ export default function Logo(props: ILogo) {
 			<Image
 				src={
 					props.type === 'dark'
-						? './logo/full-logo.svg'
-						: './logo/full-logo-white.svg'
+						? '/logo/full-logo.svg'
+						: '/logo/full-logo-white.svg'
 				}
 				alt='beauty house logo'
 				width={240}
@@ -28,8 +28,8 @@ export default function Logo(props: ILogo) {
 			<Image
 				src={
 					props.type === 'dark'
-						? './logo/small-logo.svg'
-						: './logo/small-logo.svg'
+						? '/logo/small-logo.svg'
+						: '/logo/small-logo.svg'
 				}
 				alt='beauty house logo'
 				width={props.width}
