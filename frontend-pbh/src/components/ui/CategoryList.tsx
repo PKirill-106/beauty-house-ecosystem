@@ -28,6 +28,7 @@ export default function CategoryList(props: ICategoryList) {
 								category={category}
 								subCatList={getSubcategories(categories!, category.id)}
 								showSubCat={props.showSubCat}
+								subCatStyle={props.subCatStyle}
 							/>
 						))}
 		</ul>

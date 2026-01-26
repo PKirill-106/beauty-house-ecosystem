@@ -29,11 +29,13 @@ export interface ITriggerAnimation {
 	setCount: Dispatch<SetStateAction<number>>
 }
 export interface ICategoryList {
-	style?: string
 	showSubCat?: boolean
+	style?: string
+	subCatStyle?: string
 }
 export interface ICategoryItem {
 	category: ICategory
 	subCatList: ICategory[] | null
 	showSubCat?: boolean
+	subCatStyle?: string
 }

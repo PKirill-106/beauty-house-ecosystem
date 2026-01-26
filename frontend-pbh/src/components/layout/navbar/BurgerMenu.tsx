@@ -35,7 +35,11 @@ export default function BurgerMenu() {
 						<X className='h-6 w-6' />
 					</button>
 					<hr />
-					<CategoryList style='flex flex-col gap-4' showSubCat={true} />
+					<CategoryList
+						style='flex flex-col gap-4'
+						showSubCat={true}
+						subCatStyle='flex gap-3'
+					/>
 					<Link href='/catalog'>
 						<Button
 							variant='outline'
