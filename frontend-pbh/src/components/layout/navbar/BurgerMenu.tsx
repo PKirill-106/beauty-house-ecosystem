@@ -6,6 +6,7 @@ import { Heart, Menu, User, X } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import CounterWrapper from './CounterWrapper'
+import CategoryList from '@/components/ui/CategoryList'
 
 export default function BurgerMenu() {
 	const { data: session, status } = useSession()
@@ -34,6 +35,7 @@ export default function BurgerMenu() {
 						<X className='h-6 w-6' />
 					</button>
 					<hr />
+					<CategoryList style='flex flex-col gap-4' showSubCat={true} />
 					<Link href='/catalog'>
 						<Button
 							variant='outline'
