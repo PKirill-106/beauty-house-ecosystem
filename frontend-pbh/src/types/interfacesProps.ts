@@ -30,10 +30,10 @@ export interface ITriggerAnimation {
 }
 export interface ICategoryList {
 	style?: string
-	isFooter?: boolean
+	showSubCat?: boolean
 }
 export interface ICategoryItem {
-	catName: ICategory['name']
+	category: ICategory
 	subCatList: ICategory[] | null
 	showSubCat?: boolean
 }

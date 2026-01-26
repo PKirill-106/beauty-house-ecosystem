@@ -70,16 +70,18 @@ export default function Footer() {
 					<div className='flex-1 hidden md:block'>
 						<h3 className='font-bold'>Каталог</h3>
 						<CategoryList
-							style='flex flex-col gap-5 py-4 list-size'
-							isFooter={true}
+							style='flex flex-col gap-4 py-4 list-size'
+							showSubCat={false}
 						/>
 					</div>
 					<div className='flex-1'>
 						<h3 className='font-bold'>Про Beauty House</h3>
-						<ul className='flex flex-col gap-5 py-4 list-size'>
+						<ul className='flex flex-col gap-4 py-4 list-size'>
 							{pagesList.map(page => (
-								<li key={page.link} className='li-hover'>
-									<Link href={page.link}>{page.name}</Link>
+								<li key={page.link}>
+									<Link href={page.link} className='hover-active-text'>
+										{page.name}
+									</Link>
 								</li>
 							))}
 						</ul>
