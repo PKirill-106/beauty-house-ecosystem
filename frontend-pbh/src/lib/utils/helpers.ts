@@ -10,7 +10,10 @@ export const getProfileLink = ({ role, status }: IGetProfileLink) => {
 	return profileHref
 }
 export const getSubcategories = (categories: ICategory[], parentId: string) => {
-	return categories.filter(cat => cat.parentCategoryId === parentId)
+	const subcategories = categories.filter(
+		cat => cat.parentCategoryId === parentId,
+	)
+	return subcategories
 }
 export const triggerAnimation = ({ setCount }: ITriggerAnimation) => {
 	setCount(prev => prev + 1)

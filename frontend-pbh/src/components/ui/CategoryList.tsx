@@ -25,9 +25,9 @@ export default function CategoryList(props: ICategoryList) {
 						.map(category => (
 							<CategoryItem
 								key={category.id}
-								catName={category.name}
+								category={category}
 								subCatList={getSubcategories(categories!, category.id)}
-								showSubCat={false}
+								showSubCat={props.showSubCat}
 							/>
 						))}
 		</ul>
