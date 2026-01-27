@@ -173,7 +173,7 @@ body::-webkit-scrollbar-thumb {
 		@apply hover:text-primary active:text-primary hover:scale-120 active:scale-120 duration-300 transition-all cursor-pointer;
 	}
 	.hover-active-text {
-		@apply hover:text-secondary active:text-secondary ease-out duration-300 transition-all;
+		@apply hover:text-secondary active:text-secondary ease-out duration-300 transition-all cursor-pointer;
 	}
 	.section {
 		@apply py-16 px-2 lg:px-15 xl:px-30;
