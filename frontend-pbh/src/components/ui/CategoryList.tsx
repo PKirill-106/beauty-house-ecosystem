@@ -1,8 +1,8 @@
 'use client'
+import { getSubcategories } from '@/lib/utils/helpers'
+import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
 import { ICategoryList } from '@/types/interfacesProps'
 import CategoryItem from './CategoryItem'
-import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
-import { getSubcategories } from '@/lib/utils/helpers'
 import { Skeleton } from './skeleton'
 
 export default function CategoryList(props: ICategoryList) {
@@ -11,7 +11,7 @@ export default function CategoryList(props: ICategoryList) {
 	if (!categories && !isLoading && !isError) {
 		return <p>Категорії відсутні</p>
 	} else if (isError) {
-		return <p>Сталася Помилка</p>
+		return <p>Категорій не знайдено</p>
 	}
 
 	return (
@@ -26,7 +26,9 @@ export default function CategoryList(props: ICategoryList) {
 							<CategoryItem
 								key={category.id}
 								category={category}
+								categories={categories}
 								subCatList={getSubcategories(categories!, category.id)}
+								level={0}
 								showSubCat={props.showSubCat}
 								subCatStyle={props.subCatStyle}
 							/>

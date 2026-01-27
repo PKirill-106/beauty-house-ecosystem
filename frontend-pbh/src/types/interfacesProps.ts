@@ -36,6 +36,8 @@ export interface ICategoryList {
 export interface ICategoryItem {
 	category: ICategory
 	subCatList: ICategory[] | null
+	level: number
+	categories?: ICategory[] | null
 	showSubCat?: boolean
 	subCatStyle?: string
 }
