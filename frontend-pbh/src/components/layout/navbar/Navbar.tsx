@@ -6,7 +6,7 @@ import NavList from './NavList.tsx'
 
 export default function Navbar() {
 	return (
-		<header className='container max-w-none'>
+		<header className='container max-w-none md:mb-14'>
 			<div className='flex gap-4 justify-between items-center'>
 				<div className='flex-1'>
 					<Logo type='dark' height={60} width={60} />
