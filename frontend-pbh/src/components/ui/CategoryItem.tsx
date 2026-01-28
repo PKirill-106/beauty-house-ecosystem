@@ -27,31 +27,26 @@ export default function CategoryItem(props: ICategoryItem) {
 		>
 			<div
 				onMouseEnter={() => isDesktop && props.level === 0 && setIsOpen(true)}
-				className={`flex items-center justify-center ${props.level === 0 ? 'gap-3' : 'w-full'}`}
+				className={`flex items-center justify-center w-full ${props.level === 0 ? 'gap-3' : 'w-full'}`}
 			>
 				<Link
 					href={`/catalog/${getCategoryPath(
 						props.category,
 						props.categories || [],
 					)}`}
-					className={`group flex items-center justify-between w-full! ${props.level === 0 && 'hover-active-text'} `}
+					className={`w-full ${props.level === 0 ? (props.showSubCat ? 'md:text-center hover-active-text' : 'hover-active-text') : ''}`}
 				>
 					<span
-						className={`${props.showSubCat && 'list-size font-semibold line-clamp-1'} ${props.level !== 0 && 'w-full hover-active-text'}`}
+						className={`${props.showSubCat && 'list-size font-semibold'} ${props.level !== 0 && 'w-full hover-active-text'}`}
 					>
 						{props.category.name}
 					</span>
-					{showSubcategories && (
-						<ChevronRight
-							className={`link-size hidden md:inline hover-active-text shrink-0 ${props.level === 0 ? 'group-hover:rotate-90 transition-all duration-300 ease-out' : 'hidden!'} ${isOpen && 'rotate-90'}`}
-						/>
-					)}
 				</Link>
 
 				{showSubcategories && (
 					<button
 						onClick={() => setIsOpen(prev => !prev)}
-						className={`m-2 ${props.level === 0 ? 'md:hidden' : 'hover-active-text'}`}
+						className={`m-2 hover-active-text ${props.level === 0 ? 'md:hidden' : ''}`}
 					>
 						<ChevronRight
 							className={`link-size transition-all duration-300 ease-out ${isOpen && 'rotate-90'}`}
@@ -73,13 +68,13 @@ export default function CategoryItem(props: ICategoryItem) {
 									: animateWidthAndHeight
 								: animateWidthAndHeightWithChildren
 						}
-						className={`${props.subCatStyle ?? ''}`}
+						className={`${props.subCatStyle} ${props.index === props.lastIndex && 'md:right-0'} ${props.index === 0 && 'md:left-0'}`}
 					>
 						<div
 							className={`w-px bg-transparent-text py-5 ${props.level === 0 ? 'md:hidden' : ''}`}
 						/>
 						<ul>
-							{props.subCatList!.map(sub => (
+							{props.subCatList!.map((sub, index) => (
 								<li
 									key={sub.id}
 									className='block px-2 pr-3 py-4 w-full transition-colors whitespace-nowrap'
@@ -89,6 +84,8 @@ export default function CategoryItem(props: ICategoryItem) {
 										subCatList={getSubcategories(props.categories!, sub.id)}
 										categories={props.categories}
 										level={props.level + 1}
+										index={index}
+										lastIndex={props.subCatList!.length - 1}
 										showSubCat={props.showSubCat}
 										subCatStyle='flex min-w-full md:bg-neutral-100 rounded-md'
 									/>

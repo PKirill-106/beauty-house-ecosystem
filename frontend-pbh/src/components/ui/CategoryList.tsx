@@ -34,13 +34,15 @@ export default function CategoryList(props: ICategoryList) {
 				: categories
 						.filter(category => category.parentCategoryId == null)
 						.sort((a, b) => sort(a, b))
-						.map(category => (
+						.map((category, index) => (
 							<CategoryItem
 								key={category.id}
 								category={category}
 								categories={categories}
 								subCatList={getSubcategories(categories!, category.id)}
 								level={0}
+								index={index}
+								lastIndex={categories.filter(cat => cat.parentCategoryId == null).length - 1}
 								showSubCat={props.showSubCat}
 								subCatStyle={props.subCatStyle}
 							/>

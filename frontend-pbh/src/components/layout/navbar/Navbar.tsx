@@ -22,7 +22,7 @@ export default function Navbar() {
 			<CategoryList
 				showSubCat={true}
 				style='absolute right-0 left-0 hidden md:flex md:items-stretch md:gap-4 md:justify-between bg-neutral-100 p-4 mt-4'
-				subCatStyle='md:absolute md:top-full md:left-0 md:z-10 flex flex-col justify-between min-w-full bg-neutral-100 p-2 rounded-md overflow-hidden'
+				subCatStyle='md:absolute md:top-full md:z-10 flex flex-col justify-between min-w-full bg-neutral-100 p-2 rounded-md overflow-hidden'
 			/>
 		</header>
 	)
