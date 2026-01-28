@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
-import { ICategory } from './interfacesApi'
+import { IBanner, ICategory } from './interfacesApi'
 
 export interface ILogo {
 	type: 'light' | 'dark'
@@ -42,4 +42,7 @@ export interface ICategoryItem {
 	categories?: ICategory[] | null
 	showSubCat?: boolean
 	subCatStyle?: string
+}
+export interface IBannerSlide {
+	banner: IBanner
 }

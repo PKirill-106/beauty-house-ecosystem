@@ -179,7 +179,7 @@ body::-webkit-scrollbar-thumb {
 		@apply py-16 px-2 lg:px-15 xl:px-30;
 	}
 	.main-section {
-		@apply flex-1;
+		@apply flex-1 space-y-8;
 	}
 	.list-size {
 		@apply text-xs md:text-sm lg:text-base font-light;
