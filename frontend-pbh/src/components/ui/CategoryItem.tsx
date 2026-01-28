@@ -37,13 +37,13 @@ export default function CategoryItem(props: ICategoryItem) {
 					className={`group flex items-center justify-between w-full! ${props.level === 0 && 'hover-active-text'} `}
 				>
 					<span
-						className={`${props.level !== 0 && 'w-full hover-active-text'}`}
+						className={`${props.showSubCat && 'list-size font-semibold line-clamp-1'} ${props.level !== 0 && 'w-full hover-active-text'}`}
 					>
 						{props.category.name}
 					</span>
 					{showSubcategories && (
 						<ChevronRight
-							className={`hidden md:inline hover-active-text shrink-0 ${props.level === 0 ? 'group-hover:rotate-90 transition-all duration-300 ease-out' : 'hidden!'} ${isOpen && 'rotate-90'}`}
+							className={`link-size hidden md:inline hover-active-text shrink-0 ${props.level === 0 ? 'group-hover:rotate-90 transition-all duration-300 ease-out' : 'hidden!'} ${isOpen && 'rotate-90'}`}
 						/>
 					)}
 				</Link>
@@ -54,7 +54,7 @@ export default function CategoryItem(props: ICategoryItem) {
 						className={`m-2 ${props.level === 0 ? 'md:hidden' : 'hover-active-text'}`}
 					>
 						<ChevronRight
-							className={`transition-all duration-300 ease-out ${isOpen && 'rotate-90'}`}
+							className={`link-size transition-all duration-300 ease-out ${isOpen && 'rotate-90'}`}
 						/>
 					</button>
 				)}
