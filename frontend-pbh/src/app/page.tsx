@@ -5,7 +5,13 @@ export default function Home() {
 	return (
 		<>
 			<BannerSection />
-			<MainListSection />
+			<MainListSection
+				title='Popular products'
+				highlightedPart='Popular'
+				filterType='default'
+				linkHref='/products'
+				linkLabel='See all popular products'
+			/>
 		</>
 	)
 }

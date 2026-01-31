@@ -45,7 +45,8 @@
 	--font-heading: var(--font-heading);
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
-	--color-transparent-text: rgba(0, 0, 0, 0.1);
+	--color-transparent: rgba(0, 0, 0, 0.1);
+	--color-transparent-text: rgba(0, 0, 0, 0.4);
 	--color-primary: #8e0092;
 	--color-secondary: #fb80ff;
 	--color-tertiary: #80ffe7;
@@ -136,6 +137,9 @@ body::-webkit-scrollbar-thumb {
 	body {
 		@apply bg-background text-foreground;
 	}
+	section {
+		@apply py-16 px-2 lg:px-15 xl:px-30;
+	}
 	h1 {
 		@apply text-xl md:text-2xl lg:text-3xl;
 	}
@@ -155,7 +159,7 @@ body::-webkit-scrollbar-thumb {
 		@apply text-sm md:text-base lg:text-lg;
 	}
 	hr {
-		@apply border-b w-full text-transparent-text;
+		@apply border-b w-full text-transparent;
 	}
 	strong {
 		@apply font-bold text-primary;
@@ -163,8 +167,11 @@ body::-webkit-scrollbar-thumb {
 }
 
 @layer components {
-	.container {
-		@apply w-full mx-auto py-2 px-4;
+	.main-section {
+		@apply flex-1 space-y-8 my-8;
+	}
+	.section-container {
+		@apply w-full max-w-7xl mx-auto py-2 px-4;
 	}
 	.link-size {
 		@apply h-5 w-5 lg:h-6 lg:w-6;
@@ -175,14 +182,11 @@ body::-webkit-scrollbar-thumb {
 	.hover-active-text {
 		@apply hover:text-secondary active:text-secondary ease-out duration-300 transition-all cursor-pointer;
 	}
-	.section {
-		@apply py-16 px-2 lg:px-15 xl:px-30;
-	}
-	.main-section {
-		@apply flex-1 space-y-8;
-	}
 	.list-size {
 		@apply text-xs md:text-sm lg:text-base font-light;
+	}
+	.caption {
+		@apply text-[10px] md:text-xs lg:text-sm xl:text-base font-light text-transparent-text;
 	}
 }
 
