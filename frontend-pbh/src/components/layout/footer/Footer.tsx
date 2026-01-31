@@ -20,8 +20,8 @@ export default function Footer() {
 	]
 
 	return (
-		<section className='bg-foreground text-background section p-8'>
-			<div className='container'>
+		<section className='section-container max-w-none bg-foreground text-background section p-8'>
+			<div className='section-container'>
 				<div className='flex flex-wrap md:grid-cols-3 gap-4 md:gap-8 justify-between'>
 					<div className='flex flex-col flex-1 gap-6'>
 						<Logo type='light' height={60} width={60} />

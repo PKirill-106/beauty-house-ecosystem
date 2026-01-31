@@ -1,8 +1,9 @@
 'use client'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetBannersQuery } from '@/state/banner/bannerApiSlice'
 import { useRef } from 'react'
 import { Autoplay, Pagination } from 'swiper/modules'
-import { Swiper, SwiperClass } from 'swiper/react'
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
 import BannerSlide from './BannerSlide'
 
 export default function BannerSection() {
@@ -17,21 +18,27 @@ export default function BannerSection() {
 	}
 
 	return (
-		<section className='relative mt-6 w-full max-w-5xl mx-auto rounded-xl overflow-hidden shadow-md'>
-			<Swiper
-				modules={[Pagination, Autoplay]}
-				pagination={{ clickable: true }}
-				autoplay={{ delay: 4000, disableOnInteraction: false }}
-				loop
-				onSwiper={swiper => (swiperRef.current = swiper)}
-				className='w-full h-90 md:h-125'
-				onMouseEnter={() => swiperRef.current?.autoplay.stop()}
-				onMouseLeave={() => swiperRef.current?.autoplay.start()}
-			>
-				{banners.map(banner => (
-					<BannerSlide key={banner.imageURL} banner={banner} />
-				))}
-			</Swiper>
+		<section className='section-container'>
+			{isLoading ? (
+				<Skeleton className='w-full h-90 md:h-125 rounded-xl overflow-hidden shadow-md' />
+			) : (
+				<Swiper
+					modules={[Pagination, Autoplay]}
+					pagination={{ clickable: true }}
+					autoplay={{ delay: 4000, disableOnInteraction: false }}
+					loop
+					onSwiper={swiper => (swiperRef.current = swiper)}
+					className='w-full max-w-5xl h-90 md:h-125 mt-6 mx-auto rounded-xl overflow-hidden shadow-md'
+					onMouseEnter={() => swiperRef.current?.autoplay.stop()}
+					onMouseLeave={() => swiperRef.current?.autoplay.start()}
+				>
+					{banners.map(banner => (
+						<SwiperSlide key={banner.imageURL} className='h-90 md:h-125'>
+							<BannerSlide banner={banner} />
+						</SwiperSlide>
+					))}
+				</Swiper>
+			)}
 		</section>
 	)
 }

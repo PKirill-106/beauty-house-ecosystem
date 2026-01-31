@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
-import { IBanner, ICategory } from './interfacesApi'
+import { IBanner, ICategory, IProduct } from './interfacesApi'
 
 export interface ILogo {
 	type: 'light' | 'dark'
@@ -45,4 +45,22 @@ export interface ICategoryItem {
 }
 export interface IBannerSlide {
 	banner: IBanner
+}
+export interface IMainListSection {
+	title: string
+	highlightedPart: string
+	filterType: 'favorites' | 'cart' | 'default'
+	linkHref: string
+	linkLabel: string
+}
+export interface IProductCard {
+	product: IProduct
+	categories: ICategory[]
+	isLoading: boolean
+}
+export interface IProductPrice {
+	product: IProduct
+}
+export interface ISkeletonBanner {
+	className?: string
 }
