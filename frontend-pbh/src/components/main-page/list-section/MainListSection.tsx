@@ -1,6 +1,7 @@
 'use client'
 import ProductCard from '@/components/ui/product-card/ProductCard'
 import ProductSkeleton from '@/components/ui/product-card/ProductSkeleton'
+import Section from '@/components/ui/Section'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
 import { useGetProductsQuery } from '@/state/product/productApiSlice'
@@ -26,8 +27,8 @@ export default function MainListSection(props: IMainListSection) {
 	const displayedProducts = products?.slice(0, 7) || []
 
 	return (
-		<section className='section-container'>
-			<h1>
+		<Section>
+			<h1 className='font-bold'>
 				{props.highlightedPart ? (
 					<>
 						<span className='text-accent font-bold'>
@@ -67,6 +68,6 @@ export default function MainListSection(props: IMainListSection) {
 					</Link>
 				</div>
 			)}
-		</section>
+		</Section>
 	)
 }

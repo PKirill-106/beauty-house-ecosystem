@@ -1,9 +1,10 @@
+import CategoryList from '@/components/ui/CategoryList'
+import Logo from '@/components/ui/Logo'
 import { Instagram } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { pagesList } from './staticPagesList'
-import CategoryList from '@/components/ui/CategoryList'
-import Logo from '@/components/ui/Logo'
+import { pagesList } from '../../../lib/utils/constants/staticPagesList'
+import Section from '@/components/ui/Section'
 
 export default function Footer() {
 	const year: number = new Date().getFullYear()
@@ -20,7 +21,7 @@ export default function Footer() {
 	]
 
 	return (
-		<section className='section-container max-w-none bg-foreground text-background section p-8'>
+		<Section layoutStyle='max-w-none bg-foreground text-background section p-8'>
 			<div className='section-container'>
 				<div className='flex flex-wrap md:grid-cols-3 gap-4 md:gap-8 justify-between'>
 					<div className='flex flex-col flex-1 gap-6'>
@@ -92,6 +93,6 @@ export default function Footer() {
 					товарів для б'юті індустрії в Україні
 				</p>
 			</div>
-		</section>
+		</Section>
 	)
 }

@@ -5,6 +5,7 @@ import { useRef } from 'react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
 import BannerSlide from './BannerSlide'
+import Section from '@/components/ui/Section'
 
 export default function BannerSection() {
 	const { data: banners, isLoading, isError } = useGetBannersQuery()
@@ -18,9 +19,9 @@ export default function BannerSection() {
 	}
 
 	return (
-		<section className='section-container'>
+		<Section>
 			{isLoading ? (
-				<Skeleton className='w-full h-90 md:h-125 rounded-xl overflow-hidden shadow-md' />
+				<Skeleton className='w-full rounded-xl overflow-hidden shadow-md' />
 			) : (
 				<Swiper
 					modules={[Pagination, Autoplay]}
@@ -39,6 +40,6 @@ export default function BannerSection() {
 					))}
 				</Swiper>
 			)}
-		</section>
+		</Section>
 	)
 }

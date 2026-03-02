@@ -138,7 +138,7 @@ body::-webkit-scrollbar-thumb {
 		@apply bg-background text-foreground;
 	}
 	section {
-		@apply py-16 px-2 lg:px-15 xl:px-30;
+		@apply py-4 px-2 lg:px-15 xl:px-30;
 	}
 	h1 {
 		@apply text-xl md:text-2xl lg:text-3xl;

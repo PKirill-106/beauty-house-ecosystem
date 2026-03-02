@@ -64,3 +64,8 @@ export interface IProductPrice {
 export interface ISkeletonBanner {
 	className?: string
 }
+export interface ISection {
+	children: ReactNode
+	className?: string
+	layoutStyle?: string
+}

@@ -1,8 +1,9 @@
+import Section from '@/components/ui/Section'
 import Link from 'next/link'
 
 export default function NotFound() {
 	return (
-		<section className='flex h-full items-center justify-center'>
+		<Section className='flex h-full items-center justify-center'>
 			<div className='text-center py-10 md:py-12'>
 				<h1 className='text-7xl font-bold'>404</h1>
 				<p className='mt-5 text-lg'>Сторінку не знайдено</p>
@@ -13,6 +14,6 @@ export default function NotFound() {
 					Повернутися на головну
 				</Link>
 			</div>
-		</section>
+		</Section>
 	)
 }
