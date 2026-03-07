@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
-import { IBanner, ICategory, IProduct } from './interfacesApi'
+import { IBanner, ICategory, IProduct, IProductVariant } from './interfacesApi'
 
 export interface ILogo {
 	type: 'light' | 'dark'
@@ -60,6 +60,7 @@ export interface IProductCard {
 }
 export interface IProductPrice {
 	product: IProduct
+	firstAvailableVariant: IProductVariant
 }
 export interface ISkeletonBanner {
 	className?: string
