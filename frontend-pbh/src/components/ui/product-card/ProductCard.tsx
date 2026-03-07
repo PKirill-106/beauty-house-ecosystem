@@ -10,7 +10,14 @@ import CartButton from './CartButton'
 
 export default function ProductCard(props: IProductCard) {
 	const firstImage = props.product.productImages?.[0]
-	const firstVariant = props.product.productVariants?.[0]
+
+	const firstAvailableVariant = props.product.productVariants
+		.filter(v => v.isStock)
+		.sort((a, b) => a.price - b.price)[0]
+
+	if (!firstAvailableVariant.isStock) {
+		return <p className='caption'>Продукт недоступний</p>
+	}
 
 	const productUrl = `/product/${props.product.slug}`
 
@@ -28,7 +35,7 @@ export default function ProductCard(props: IProductCard) {
 					initial='initial'
 					whileHover='animate'
 					exit='initial'
-					className={`relative flex flex-col gap-2 md:gap-3 rounded-lg transition-all duration-300`}
+					className={`relative flex flex-col gap-2 md:gap-3 transition-all duration-300`}
 				>
 					<Link href={productUrl} className='mb-1'>
 						<motion.div
@@ -52,7 +59,10 @@ export default function ProductCard(props: IProductCard) {
 							<span className='caption'>{props.product.categoryName}</span>
 						</div>
 						<div className='flex items-center justify-between'>
-							<ProductPrice product={props.product} />
+							<ProductPrice
+								product={props.product}
+								firstAvailableVariant={firstAvailableVariant}
+							/>
 							<div>
 								<FavoriteButton
 									productId={props.product.id}
@@ -61,8 +71,8 @@ export default function ProductCard(props: IProductCard) {
 								/>
 								<CartButton
 									productId={props.product.id}
-									initialVariantId={firstVariant.id}
-									unitsInStock={firstVariant.unitsInStock}
+									initialVariantId={firstAvailableVariant.id}
+									unitsInStock={firstAvailableVariant.unitsInStock}
 								/>
 							</div>
 						</div>

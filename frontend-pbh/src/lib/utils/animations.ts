@@ -73,8 +73,8 @@ export const animateProductCardImage = createVariants(
 	[
 		{
 			param: 'borderRadius',
-			initialValue: '2% 50% 50% 50%',
-			finalValue: '2% 2% 2% 2%',
+			initialValue: '4% 50% 50% 50%',
+			finalValue: '4% 4% 0% 0%',
 		},
 	],
 	'easeIn',
