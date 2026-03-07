@@ -2,7 +2,6 @@
 import ProductCard from '@/components/ui/product-card/ProductCard'
 import ProductSkeleton from '@/components/ui/product-card/ProductSkeleton'
 import Section from '@/components/ui/Section'
-import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
 import { useGetProductsQuery } from '@/state/product/productApiSlice'
 import { IMainListSection } from '@/types/interfacesProps'
@@ -24,50 +23,70 @@ export default function MainListSection(props: IMainListSection) {
 	const isLoading = isProdLoading || isCatLoading
 	const isError = isProdError || isCatError
 
-	const displayedProducts = products?.slice(0, 7) || []
+	const filteredProducts = products?.filter(product => {
+		switch (props.filterType) {
+			case 'new':
+				return product.isNew
+			case 'deals':
+				return product.isDiscounted
+			case 'season':
+				return product.isSeasonal
+			default:
+				return product.categoryName === props.title
+		}
+	})
+
+	const displayedProducts = filteredProducts?.slice(0, 4) || []
 
 	return (
-		<Section>
-			<h1 className='font-bold'>
-				{props.highlightedPart ? (
-					<>
-						<span className='text-accent font-bold'>
-							{props.highlightedPart}
-						</span>{' '}
-						{props.title.replace(props.highlightedPart, '')}
-					</>
-				) : (
-					props.title
-				)}
-			</h1>
+		<>
+			{displayedProducts.length > 0 && (
+				<Section>
+					<div className='flex justify-between items-center'>
+						<h1 className='font-bold'>
+							{props.highlightedPart ? (
+								<>
+									<span className='text-primary'>{props.highlightedPart}</span>{' '}
+									{props.title.replace(props.highlightedPart, '')}
+								</>
+							) : (
+								props.title
+							)}
+						</h1>
+						<Link
+							href={props.linkHref}
+							className='flex justify-baseline items-center font-medium text-transparent-text hover:text-secondary transition-all duration-300 group'
+						>
+							{props.linkLabel}
+							<ChevronRight
+								strokeWidth={2}
+								className='transition-transform duration-300 group-hover:translate-x-1'
+							/>
+						</Link>
+					</div>
 
-			{isError ? (
-				<h3 className='py-3 text-center text-red-500'>
-					Помилка завантаження продуктів.
-				</h3>
-			) : (
-				<div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6'>
-					{isLoading
-						? [...Array(7)].map((_, index) => <ProductSkeleton key={index} />)
-						: displayedProducts.map(product => (
-								<ProductCard
-									key={product.id}
-									product={product}
-									categories={categories!}
-									isLoading={isLoading}
-								/>
-							))}
-
-					<Link
-						href={props.linkHref}
-						className='bg-foreground text-white rounded-lg flex items-center justify-center text-center font-semibold hover:bg-accent hover:scale-105 hover:shadow-lg transition-all duration-300 px-4 py-6 text-sm'
-					>
-						<h3 className='flex flex-col items-center'>
-							{props.linkLabel} <div className='my-4' /> <ChevronRight />
+					{isError ? (
+						<h3 className='py-3 text-center text-red-500'>
+							Помилка завантаження продуктів.
 						</h3>
-					</Link>
-				</div>
+					) : (
+						<div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6'>
+							{isLoading
+								? [...Array(4)].map((_, index) => (
+										<ProductSkeleton key={index} />
+									))
+								: displayedProducts.map(product => (
+										<ProductCard
+											key={product.id}
+											product={product}
+											categories={categories!}
+											isLoading={isLoading}
+										/>
+									))}
+						</div>
+					)}
+				</Section>
 			)}
-		</Section>
+		</>
 	)
 }

@@ -48,8 +48,8 @@ export interface IBannerSlide {
 }
 export interface IMainListSection {
 	title: string
-	highlightedPart: string
-	filterType: 'favorites' | 'cart' | 'default'
+	highlightedPart?: string
+	filterType: 'new' | 'deals' | 'season' | 'default'
 	linkHref: string
 	linkLabel: string
 }
