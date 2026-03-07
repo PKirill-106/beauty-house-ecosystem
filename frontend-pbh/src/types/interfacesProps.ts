@@ -69,3 +69,13 @@ export interface ISection {
 	className?: string
 	layoutStyle?: string
 }
+export interface IFavoriteButton {
+	productId: string
+	heartClassName: string
+	buttonClassName: string
+}
+export interface ICartButton {
+	productId: string
+	initialVariantId: string
+	unitsInStock: number
+}

@@ -67,3 +67,16 @@ export const animateWidthAndHeightWithChildren = createVariants(
 	'easeInOut',
 	0.1,
 )
+
+export const animateProductCardImage = createVariants(
+	0.15,
+	[
+		{
+			param: 'borderRadius',
+			initialValue: '2% 50% 50% 50%',
+			finalValue: '2% 2% 2% 2%',
+		},
+	],
+	'easeIn',
+	0.1,
+)
