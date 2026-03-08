@@ -47,13 +47,27 @@ export default function Footer() {
 							</Link>
 
 							<Link
-								className='link-size link-hover'
+								className='link-size link-hover flex items-center justify-between'
 								href='https://t.me/+0AhVcNR2ThNiZDBi?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGndzohimQYU6Jpi2dCZqwxZf7zqt0AckIVIL-QClw0nlZ2-yc4faeHD6LhTBA_aem_Dy9qV_u03I1hnjGvHT3fzw'
 								target='_blank'
 							>
 								<Image
 									src='/telegram.svg'
-									alt=''
+									alt='telegram logo'
+									width={20}
+									height={20}
+									className='invert'
+								/>
+							</Link>
+
+							<Link
+								className='link-size link-hover'
+								href='https://www.facebook.com/share/16WvKzrGDa/'
+								target='_blank'
+							>
+								<Image
+									src='/facebook.svg'
+									alt='facebook logo'
 									width={20}
 									height={20}
 									className='invert'
