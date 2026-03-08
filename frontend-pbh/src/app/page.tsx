@@ -1,6 +1,7 @@
 import BannerSection from '@/components/main-page/banner/BannerSection'
 import MainListSection from '@/components/main-page/list-section/MainListSection'
 import { getAllCategories } from '@/lib/services/categoryServices'
+import { sortCat } from '@/lib/utils/helpers'
 
 export default async function Home() {
 	const res = await getAllCategories()
@@ -24,15 +25,17 @@ export default async function Home() {
 				linkHref='/catalogAktsiya=true'
 				linkLabel='Переглянути всі'
 			/>
-			{parentCat.map(c => (
-				<MainListSection
-					key={c.id}
-					title={c.name}
-					filterType='default'
-					linkHref={`/catalog/${c.slug}`}
-					linkLabel='Переглянути всі'
-				/>
-			))}
+			{parentCat
+				.sort((a, b) => sortCat(a, b))
+				.map(c => (
+					<MainListSection
+						key={c.id}
+						title={c.name}
+						filterType='default'
+						linkHref={`/catalog/${c.slug}`}
+						linkLabel='Переглянути всі'
+					/>
+				))}
 		</>
 	)
 }
