@@ -4,6 +4,7 @@ import ProductSkeleton from '@/components/ui/product-card/ProductSkeleton'
 import Section from '@/components/ui/Section'
 import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
 import { useGetProductsQuery } from '@/state/product/productApiSlice'
+import { ICategory, IProduct } from '@/types/interfacesApi'
 import { IMainListSection } from '@/types/interfacesProps'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
@@ -23,6 +24,35 @@ export default function MainListSection(props: IMainListSection) {
 	const isLoading = isProdLoading || isCatLoading
 	const isError = isProdError || isCatError
 
+	const getParentCategory = (
+		product: IProduct,
+		title: string,
+		parentCatId?: string,
+	) => {
+		const category = categories!.find(cat =>
+			parentCatId ? cat.id === parentCatId : cat.id === product.categoryId,
+		)
+		if (category?.parentCategoryId) {
+			return getParentCategory(product, title, category.parentCategoryId)
+		} else {
+			if (category?.name === title) {
+				return true
+			} else {
+				return false
+			}
+		}
+	}
+
+	const sort = (a: ICategory, b: ICategory) => {
+		if (a.description < b.description) {
+			return -1
+		} else if (a.description > b.description) {
+			return 1
+		}
+
+		return 0
+	}
+
 	const filteredProducts = products?.filter(product => {
 		switch (props.filterType) {
 			case 'new':
@@ -32,7 +62,7 @@ export default function MainListSection(props: IMainListSection) {
 			case 'season':
 				return product.isSeasonal
 			default:
-				return product.categoryName === props.title
+				return getParentCategory(product, props.title)
 		}
 	})
 
