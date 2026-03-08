@@ -55,7 +55,6 @@ export interface IMainListSection {
 }
 export interface IProductCard {
 	product: IProduct
-	categories: ICategory[]
 	isLoading: boolean
 }
 export interface IProductPrice {

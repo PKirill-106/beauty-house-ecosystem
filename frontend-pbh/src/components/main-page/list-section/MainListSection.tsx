@@ -79,7 +79,6 @@ export default function MainListSection(props: IMainListSection) {
 										<ProductCard
 											key={product.id}
 											product={product}
-											categories={categories!}
 											isLoading={isLoading}
 										/>
 									))}
