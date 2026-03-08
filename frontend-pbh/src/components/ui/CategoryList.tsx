@@ -1,10 +1,9 @@
 'use client'
-import { getSubcategories } from '@/lib/utils/helpers'
+import { getSubcategories, sortCat } from '@/lib/utils/helpers'
 import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
 import { ICategoryList } from '@/types/interfacesProps'
 import CategoryItem from './CategoryItem'
 import { Skeleton } from './skeleton'
-import { ICategory } from '@/types/interfacesApi'
 
 export default function CategoryList(props: ICategoryList) {
 	const { data: categories, isLoading, isError } = useGetCategoriesQuery()
@@ -15,16 +14,6 @@ export default function CategoryList(props: ICategoryList) {
 		return <p>Категорій не знайдено</p>
 	}
 
-	const sort = (a: ICategory, b: ICategory) => {
-		if (a.description < b.description) {
-			return -1
-		} else if (a.description > b.description) {
-			return 1
-		}
-
-		return 0
-	}
-
 	return (
 		<ul className={props.style}>
 			{isLoading
@@ -33,7 +22,7 @@ export default function CategoryList(props: ICategoryList) {
 					))
 				: categories
 						.filter(category => category.parentCategoryId == null)
-						.sort((a, b) => sort(a, b))
+						.sort((a, b) => sortCat(a, b))
 						.map((category, index) => (
 							<CategoryItem
 								key={category.id}
@@ -42,7 +31,10 @@ export default function CategoryList(props: ICategoryList) {
 								subCatList={getSubcategories(categories!, category.id)}
 								level={0}
 								index={index}
-								lastIndex={categories.filter(cat => cat.parentCategoryId == null).length - 1}
+								lastIndex={
+									categories.filter(cat => cat.parentCategoryId == null)
+										.length - 1
+								}
 								showSubCat={props.showSubCat}
 								subCatStyle={props.subCatStyle}
 							/>

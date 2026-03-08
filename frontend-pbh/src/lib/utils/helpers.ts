@@ -41,3 +41,12 @@ export const triggerAnimation = ({ setCount }: ITriggerAnimation) => {
 		setCount(prev => prev - 1)
 	}, 1500)
 }
+export const sortCat = (a: ICategory, b: ICategory) => {
+		if (a.description < b.description) {
+			return -1
+		} else if (a.description > b.description) {
+			return 1
+		}
+
+		return 0
+	}
