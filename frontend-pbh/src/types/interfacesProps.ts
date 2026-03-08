@@ -1,5 +1,11 @@
 import { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
-import { IBanner, ICategory, IProduct, IProductVariant } from './interfacesApi'
+import {
+	IBanner,
+	ICategory,
+	IProduct,
+	IProductColor,
+	IProductVariant,
+} from './interfacesApi'
 
 export interface ILogo {
 	type: 'light' | 'dark'
@@ -78,4 +84,36 @@ export interface ICartButton {
 	productId: string
 	initialVariantId: string
 	unitsInStock: number
+}
+export type CatalogPageProps = {
+	params: Promise<{ slug?: string[] }>
+	searchParams: Promise<{
+		sort?: string
+		sezon?: string
+		akciya?: string
+		novinki?: string
+		page?: string
+		color?: string
+	}>
+}
+export interface IPaginationControlsProps {
+	totalPages: number
+}
+export interface IProductGrid {
+	products: IProduct[]
+	categories: ICategory[]
+	type?: 'favorites'
+}
+export interface IProductFilters {
+	categories: ICategory[]
+	activeCategory: string
+	activeSubcategory: string
+}
+export interface IFilterSelectGroup {
+	categories: ICategory[]
+	activeCategory: string
+	activeSubcategory: string
+}
+export interface IFilterCheckbox {
+	text: string
 }

@@ -41,6 +41,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^2.11.2
         version: 2.11.2(react-redux@9.2.0(@types/react@19.2.10)(react@19.2.1)(redux@5.0.1))(react@19.2.1)
+      '@sindresorhus/transliterate':
+        specifier: ^2.3.1
+        version: 2.3.1
       axios:
         specifier: ^1.13.4
         version: 1.13.4
@@ -89,6 +92,9 @@ importers:
       sass:
         specifier: ^1.97.3
         version: 1.97.3
+      slugify:
+        specifier: ^1.6.6
+        version: 1.6.6
       swiper:
         specifier: ^12.0.3
         version: 12.0.3
@@ -864,6 +870,10 @@ packages:
       react-redux:
         optional: true
 
+  '@sindresorhus/transliterate@2.3.1':
+    resolution: {integrity: sha512-gVaaGtKYMYAMmI8buULVH3A2TXVJ98QiwGwI7ddrWGuGidGC2uRt4FHs22+8iROJ0QTzju9CuMjlVsrvpqsdhA==}
+    engines: {node: '>=20'}
+
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
@@ -1453,6 +1463,10 @@ packages:
   sharp@0.34.5:
     resolution: {integrity: sha512-Ou9I5Ft9WNcCbXrU9cMgPBcCK8LiwLqcbywW3t4oDV37n1pzpuNLsYiAV8eODnjbtQlSDwZ2cUEeQz4E54Hltg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+
+  slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -2193,6 +2207,8 @@ snapshots:
       react: 19.2.1
       react-redux: 9.2.0(@types/react@19.2.10)(react@19.2.1)(redux@5.0.1)
 
+  '@sindresorhus/transliterate@2.3.1': {}
+
   '@standard-schema/spec@1.1.0': {}
 
   '@standard-schema/utils@0.3.0': {}
@@ -2723,6 +2739,8 @@ snapshots:
       '@img/sharp-win32-ia32': 0.34.5
       '@img/sharp-win32-x64': 0.34.5
     optional: true
+
+  slugify@1.6.6: {}
 
   source-map-js@1.2.1: {}
 
