@@ -1,16 +1,12 @@
 import CatalogClient from '@/components/catalog-page/CatalogClient'
 import Section from '@/components/ui/Section'
-import { CatalogPageProps } from '@/types/interfacesProps'
 import { FilterProvider } from '../../providers/FilterProvider'
 
-export default function CatalogPage({
-	params,
-	searchParams,
-}: CatalogPageProps) {
+export default function CatalogPage() {
 	return (
 		<Section>
 			<FilterProvider>
-				<CatalogClient params={params} searchParams={searchParams} />
+				<CatalogClient />
 			</FilterProvider>
 		</Section>
 	)

@@ -85,17 +85,7 @@ export interface ICartButton {
 	initialVariantId: string
 	unitsInStock: number
 }
-export type CatalogPageProps = {
-	params: Promise<{ slug?: string[] }>
-	searchParams: Promise<{
-		sort?: string
-		sezon?: string
-		akciya?: string
-		novinki?: string
-		page?: string
-		color?: string
-	}>
-}
+
 export interface IPaginationControlsProps {
 	totalPages: number
 }
@@ -104,16 +94,7 @@ export interface IProductGrid {
 	categories: ICategory[]
 	type?: 'favorites'
 }
-export interface IProductFilters {
-	categories: ICategory[]
-	activeCategory: string
-	activeSubcategory: string
-}
-export interface IFilterSelectGroup {
-	categories: ICategory[]
-	activeCategory: string
-	activeSubcategory: string
-}
 export interface IFilterCheckbox {
 	text: string
 }
+export interface IFilterSelect {}
