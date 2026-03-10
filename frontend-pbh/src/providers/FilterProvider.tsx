@@ -1,5 +1,6 @@
 'use client'
 
+import { getParentCategoryMain } from '@/lib/utils/helpers'
 import { useGetCategoriesQuery } from '@/state/category/categoryApiSlice'
 import { useGetProductsQuery } from '@/state/product/productApiSlice'
 import { ICategory, IProduct } from '@/types/interfacesApi'
@@ -23,6 +24,7 @@ interface FilterContextType {
 	paginatedProducts: IProduct[]
 	categories: ICategory[]
 	isLoading: boolean
+	totalPages: number
 	PRODUCTS_PER_PAGE: number
 }
 
@@ -91,12 +93,14 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 	}, [categories, splitPath])
 
 	const filteredProducts = useMemo(() => {
-		if (!products) return []
+		if (!products || !categories || isLoading) return []
 		let result = [...products]
 
 		//Select filters
 		if (activeCategory) {
-			result = result.filter(p => p.categoryId === activeCategory.id)
+			result = result.filter(p =>
+				getParentCategoryMain(categories, p, activeCategory.name),
+			)
 		}
 
 		//Color filters
@@ -127,6 +131,8 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 		return result
 	}, [products, categories, activeCategory, searchParams, getSlug])
 
+	const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE)
+
 	return (
 		<FilterContext.Provider
 			value={{
@@ -138,6 +144,7 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 				paginatedProducts: filteredProducts,
 				categories: categories!,
 				isLoading,
+				totalPages,
 				PRODUCTS_PER_PAGE,
 			}}
 		>

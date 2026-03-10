@@ -54,7 +54,7 @@ export const sortCat = (a: ICategory, b: ICategory) => {
 
 	return 0
 }
-const getParentCategoryMain = (
+export const getParentCategoryMain = (
 	categories: ICategory[],
 	product: IProduct,
 	title: string,
