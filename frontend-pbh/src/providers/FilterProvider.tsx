@@ -79,12 +79,16 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 		[getSlug, pathname, router, searchParams],
 	)
 
-	const splitPath = pathname.split('/')
+	const splitPath = pathname.split('/').filter(Boolean)
 
-	const activeCategorySlug =
-		splitPath.length > 0 ? splitPath[splitPath.length - 1] : null
+	const activeCategory = useMemo(() => {
+		if (!categories || splitPath.length === 0) return undefined
 
-	const activeCategory = categories?.find(c => c.slug === activeCategorySlug)
+		const lastSegment = splitPath[splitPath.length - 1]
+		if (lastSegment === 'catalog') return undefined
+
+		return categories.find(c => c.slug === lastSegment)
+	}, [categories, splitPath])
 
 	const filteredProducts = useMemo(() => {
 		if (!products) return []
