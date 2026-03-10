@@ -112,7 +112,7 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 		// Checkbox filters
 		if (searchParams.get('sezon') === 'true')
 			result = result.filter(p => p.isSeasonal)
-		if (searchParams.get('akciya') === 'true')
+		if (searchParams.get('aktsiya') === 'true')
 			result = result.filter(p => p.isDiscounted)
 		if (searchParams.get('novinki') === 'true')
 			result = result.filter(p => p.isNew)
