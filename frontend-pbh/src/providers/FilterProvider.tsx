@@ -50,7 +50,7 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 	const PRODUCTS_PER_PAGE = 24
 
 	const getSlug = useCallback((text: string) => {
-		return slugify(transliterate(text))
+		return slugify(transliterate(text)).toLowerCase()
 	}, [])
 
 	const getIsChecked = useCallback(
