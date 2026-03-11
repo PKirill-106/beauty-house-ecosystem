@@ -3,6 +3,7 @@ import { IPaginationControlsProps } from '@/types/interfacesProps'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
+import Section from '../ui/Section'
 
 export default function PaginationControls({
 	totalPages,
@@ -34,7 +35,7 @@ export default function PaginationControls({
 	const pageRange = getPageRange()
 
 	return (
-		<div className='flex justify-center mt-10'>
+		<Section className='flex justify-center mt-10'>
 			<div className='flex space-x-2 items-center'>
 				{/* Prev button */}
 				{currentPage > 1 ? (
@@ -79,6 +80,6 @@ export default function PaginationControls({
 					</div>
 				)}
 			</div>
-		</div>
+		</Section>
 	)
 }

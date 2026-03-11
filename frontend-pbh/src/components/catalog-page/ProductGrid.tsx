@@ -6,5 +6,6 @@ export default function ProductGrid({
 	categories,
 	type,
 }: IProductGrid) {
-	return <div>ProductGrid</div>
+import Section from '../ui/Section'
+	return <Section>ProductGrid</Section>
 }

@@ -3,6 +3,7 @@ import { useFilters } from '@/providers/FilterProvider'
 import ProductFilters from './ProductFilters'
 import ProductGrid from './ProductGrid'
 import PaginationControls from './PaginationControls'
+import Section from '../ui/Section'
 
 export default function CatalogClient() {
 	const { categories, paginatedProducts, activeCategory, totalPages } =
@@ -10,12 +11,12 @@ export default function CatalogClient() {
 
 	return (
 		<>
-			<h2 className='mb-6'>{activeCategory?.name || 'Каталог'}</h2>
-
-			<ProductFilters />
-
-			<ProductGrid categories={categories} products={paginatedProducts} />
-
+			{' '}
+			<Section>
+				<h2 className='mb-6'>{activeCategory?.name || 'Каталог'}</h2>
+				<ProductFilters />
+			</Section>
+			<ProductGrid />
 			<PaginationControls totalPages={totalPages} />
 		</>
 	)
