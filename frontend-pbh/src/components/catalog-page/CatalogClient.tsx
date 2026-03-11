@@ -10,7 +10,7 @@ export default function CatalogClient() {
 
 	return (
 		<>
-			<Section>
+			<Section className='py-0'>
 				<h2 className='mb-6'>{activeCategory?.name || 'Каталог'}</h2>
 				<ProductFilters />
 			</Section>

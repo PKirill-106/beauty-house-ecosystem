@@ -35,7 +35,7 @@ export default function PaginationControls({
 	const pageRange = getPageRange()
 
 	return (
-		<Section className='flex justify-center mt-10'>
+		<Section className='flex justify-center py-0'>
 			<div className='flex space-x-2 items-center'>
 				{/* Prev button */}
 				{currentPage > 1 ? (

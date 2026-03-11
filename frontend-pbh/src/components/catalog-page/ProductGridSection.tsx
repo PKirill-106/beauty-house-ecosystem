@@ -7,7 +7,7 @@ import Section from '../ui/Section'
 export default function ProductGridSection() {
 	const { isLoading, paginatedProducts, PRODUCTS_PER_PAGE } = useFilters()
 	return (
-		<Section>
+		<Section className='py-0'>
 			<ProductGrid
 				isLoading={isLoading}
 				displayedProducts={paginatedProducts}
