@@ -1,4 +1,4 @@
-import FilterCheckbox from '../ui/FilterCheckbox'
+import FilterCheckbox from '../ui/catalog/FilterCheckbox'
 
 export default function FilterCheckboxGroup() {
 	return (
