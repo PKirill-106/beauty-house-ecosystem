@@ -2,7 +2,7 @@ import { useFilters } from '@/providers/FilterProvider'
 import FilterSelect from '../ui/catalog/FilterSelect'
 
 export default function FilterSelectGroup() {
-	const { categories, activeChain, activeCategory } = useFilters()
+	const { categories, activeChain } = useFilters()
 
 	return (
 		<div className='flex flex-col gap-5'>

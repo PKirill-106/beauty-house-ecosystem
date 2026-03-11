@@ -1,5 +1,4 @@
 'use client'
-
 import { useFilters } from '@/providers/FilterProvider'
 import ProductGrid from '../ui/product-card/ProductGrid'
 import Section from '../ui/Section'

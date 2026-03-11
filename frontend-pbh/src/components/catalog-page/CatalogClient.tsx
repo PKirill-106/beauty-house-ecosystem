@@ -1,9 +1,9 @@
 'use client'
 import { useFilters } from '@/providers/FilterProvider'
+import Section from '../ui/Section'
+import PaginationControls from './PaginationControls'
 import ProductFilters from './ProductFilters'
 import ProductGridSection from './ProductGridSection'
-import PaginationControls from './PaginationControls'
-import Section from '../ui/Section'
 
 export default function CatalogClient() {
 	const { activeCategory, totalPages } = useFilters()
