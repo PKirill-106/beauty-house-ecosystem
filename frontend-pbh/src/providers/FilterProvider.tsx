@@ -23,7 +23,6 @@ const slugify = require('slugify')
 interface FilterContextType {
 	searchParams: ReadonlyURLSearchParams
 	handleCategorySelect: (currentCat: ICategory) => void
-	handleSelect: () => void
 	getSlug: (text: string) => string
 	getIsChecked: (text: string) => boolean
 	toggleFilter: (key: string, value?: string) => void
@@ -147,6 +146,16 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 
 	const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE)
 
+	const currentPage = useMemo(() => {
+		return parseInt(searchParams.get('page') || '1', 10)
+	}, [filteredProducts])
+
+	const paginatedProducts = useMemo(() => {
+		const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE
+		const endIndex = startIndex + PRODUCTS_PER_PAGE
+		return filteredProducts.slice(startIndex, endIndex)
+	}, [filteredProducts, currentPage])
+
 	const handleCategorySelect = useCallback(
 		(currentCat: ICategory) => {
 			const newPath = `/catalog/${getCategoryPath(currentCat, categories!)}`
@@ -178,21 +187,18 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 		[getSlug, pathname, router, searchParams],
 	)
 
-	const handleSelect = () => {}
-
 	return (
 		<FilterContext.Provider
 			value={{
 				searchParams,
 				handleCategorySelect,
-				handleSelect,
 				getSlug,
 				getIsChecked,
 				toggleFilter,
 				activeChain,
 				activeCategory,
 				filteredProducts,
-				paginatedProducts: filteredProducts,
+				paginatedProducts,
 				categories: categories!,
 				isLoading,
 				totalPages,

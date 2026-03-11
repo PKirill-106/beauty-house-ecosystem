@@ -1,5 +1,6 @@
 'use client'
 import ProductCard from '@/components/ui/product-card/ProductCard'
+import ProductGrid from '@/components/ui/product-card/ProductGrid'
 import ProductSkeleton from '@/components/ui/product-card/ProductSkeleton'
 import Section from '@/components/ui/Section'
 import { filteredMainProducts } from '@/lib/utils/helpers'
@@ -64,19 +65,11 @@ export default function MainListSection(props: IMainListSection) {
 							Помилка завантаження продуктів.
 						</h3>
 					) : (
-						<div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6'>
-							{isLoading
-								? [...Array(4)].map((_, index) => (
-										<ProductSkeleton key={index} />
-									))
-								: displayedProducts.map(product => (
-										<ProductCard
-											key={product.id}
-											product={product}
-											isLoading={isLoading}
-										/>
-									))}
-						</div>
+						<ProductGrid
+							isLoading={isLoading}
+							displayedProducts={displayedProducts}
+							skeletArrLength={4}
+						/>
 					)}
 				</Section>
 			)}

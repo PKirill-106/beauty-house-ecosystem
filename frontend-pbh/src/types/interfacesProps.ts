@@ -91,3 +91,8 @@ export interface IFilterSelect {
 	level?: number
 	type: 'categories' | 'color' | 'sort'
 }
+export interface IProductGrid {
+	isLoading: boolean
+	displayedProducts: IProduct[]
+	skeletArrLength?: number
+}
