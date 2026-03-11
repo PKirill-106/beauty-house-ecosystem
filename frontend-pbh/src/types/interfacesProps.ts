@@ -83,11 +83,6 @@ export interface ICartButton {
 export interface IPaginationControlsProps {
 	totalPages: number
 }
-export interface IProductGrid {
-	products: IProduct[]
-	categories: ICategory[]
-	type?: 'favorites'
-}
 export interface IFilterCheckbox {
 	text: string
 }

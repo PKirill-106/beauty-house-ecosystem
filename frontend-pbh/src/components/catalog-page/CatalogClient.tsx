@@ -6,8 +6,7 @@ import PaginationControls from './PaginationControls'
 import Section from '../ui/Section'
 
 export default function CatalogClient() {
-	const { categories, paginatedProducts, activeCategory, totalPages } =
-		useFilters()
+	const { activeCategory, totalPages } = useFilters()
 
 	return (
 		<>
