@@ -1,11 +1,5 @@
 import { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
-import {
-	IBanner,
-	ICategory,
-	IProduct,
-	IProductColor,
-	IProductVariant,
-} from './interfacesApi'
+import { IBanner, ICategory, IProduct, IProductVariant } from './interfacesApi'
 
 export interface ILogo {
 	type: 'light' | 'dark'
@@ -97,4 +91,8 @@ export interface IProductGrid {
 export interface IFilterCheckbox {
 	text: string
 }
-export interface IFilterSelect {}
+export interface IFilterSelect {
+	placeholder: string
+	level?: number
+	type: 'categories' | 'color' | 'sort'
+}

@@ -54,7 +54,7 @@ export const sortCat = (a: ICategory, b: ICategory) => {
 
 	return 0
 }
-export const getParentCategoryMain = (
+export const getSubCategoryProducts = (
 	categories: ICategory[],
 	product: IProduct,
 	title: string,
@@ -63,18 +63,22 @@ export const getParentCategoryMain = (
 	const category = categories!.find(cat =>
 		parentCatId ? cat.id === parentCatId : cat.id === product.categoryId,
 	)
-	if (category?.parentCategoryId) {
-		return getParentCategoryMain(
-			categories,
-			product,
-			title,
-			category.parentCategoryId,
-		)
+	if (category?.name === title) {
+		return true
 	} else {
-		if (category?.name === title) {
-			return true
+		if (category?.parentCategoryId) {
+			return getSubCategoryProducts(
+				categories,
+				product,
+				title,
+				category.parentCategoryId,
+			)
 		} else {
-			return false
+			if (category?.name === title) {
+				return true
+			} else {
+				return false
+			}
 		}
 	}
 }
@@ -93,7 +97,7 @@ export const filteredMainProducts = (
 			case 'season':
 				return product.isSeasonal
 			default:
-				return getParentCategoryMain(categories, product, title)
+				return getSubCategoryProducts(categories, product, title)
 		}
 	})
 }
