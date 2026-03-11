@@ -1,38 +1,14 @@
 'use client'
+import { useFilters } from '@/providers/FilterProvider'
 import { IPaginationControlsProps } from '@/types/interfacesProps'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
 import Section from '../ui/Section'
 
 export default function PaginationControls({
 	totalPages,
 }: IPaginationControlsProps) {
-	const pathname = usePathname()
-	const searchParams = useSearchParams()
-
-	const currentPage = parseInt(searchParams.get('page') || '1', 10)
-
-	const createPageLink = (page: number) => {
-		const params = new URLSearchParams(searchParams)
-		params.set('page', page.toString())
-		return `${pathname}?${params.toString()}`
-	}
-
-	const getPageRange = () => {
-		const maxVisible = 5
-		let start = Math.max(1, currentPage - Math.floor(maxVisible / 2))
-		let end = start + maxVisible - 1
-
-		if (end > totalPages) {
-			end = totalPages
-			start = Math.max(1, end - maxVisible + 1)
-		}
-
-		return Array.from({ length: end - start + 1 }, (_, i) => start + i)
-	}
-
-	const pageRange = getPageRange()
+	const { pageRange, createPageLink, currentPage } = useFilters()
 
 	return (
 		<Section className='flex justify-center py-0'>

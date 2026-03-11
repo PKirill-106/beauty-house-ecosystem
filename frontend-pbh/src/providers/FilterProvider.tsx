@@ -22,6 +22,9 @@ const slugify = require('slugify')
 
 interface FilterContextType {
 	searchParams: ReadonlyURLSearchParams
+	pageRange: number[]
+	currentPage: number
+	createPageLink: (page: number) => string
 	handleCategorySelect: (currentCat: ICategory) => void
 	getSlug: (text: string) => string
 	getIsChecked: (text: string) => boolean
@@ -156,6 +159,31 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 		return filteredProducts.slice(startIndex, endIndex)
 	}, [filteredProducts, currentPage])
 
+	const pageRange = useMemo(() => {
+		const maxVisible = 5
+		let start = Math.max(1, currentPage - Math.floor(maxVisible / 2))
+		let end = start + maxVisible - 1
+
+		if (end > totalPages) {
+			end = totalPages
+			start = Math.max(1, end - maxVisible + 1)
+		}
+
+		return Array.from(
+			{ length: Math.max(0, end - start + 1) },
+			(_, i) => start + i,
+		)
+	}, [currentPage, totalPages])
+
+	const createPageLink = useCallback(
+		(page: number) => {
+			const params = new URLSearchParams(searchParams)
+			params.set('page', page.toString())
+			return `${pathname}?${params.toString()}`
+		},
+		[pathname, searchParams],
+	)
+
 	const handleCategorySelect = useCallback(
 		(currentCat: ICategory) => {
 			const newPath = `/catalog/${getCategoryPath(currentCat, categories!)}`
@@ -191,6 +219,9 @@ export function FilterProvider({ children }: { children: ReactNode }) {
 		<FilterContext.Provider
 			value={{
 				searchParams,
+				pageRange,
+				currentPage,
+				createPageLink,
 				handleCategorySelect,
 				getSlug,
 				getIsChecked,
