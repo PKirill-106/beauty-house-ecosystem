@@ -6,12 +6,19 @@ import { getProfileLink } from '@/lib/utils/helpers'
 import { Heart, Menu, User, X } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 import CounterWrapper from './CounterWrapper'
 
 export default function BurgerMenu() {
 	const { data: session, status } = useSession()
+	const pathname = usePathname()
 
 	const { isOpen, setIsOpen, ref: menuRef } = useClickoutside()
+
+	useEffect(() => {
+		setIsOpen(false)
+	}, [pathname])
 
 	const profileLink = getProfileLink({
 		role: session?.user.role,

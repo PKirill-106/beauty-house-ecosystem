@@ -9,11 +9,17 @@ import { ICategoryItem } from '@/types/interfacesProps'
 import { ChevronRight } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 
 export default function CategoryItem(props: ICategoryItem) {
+	const pathname = usePathname()
 	const [isOpen, setIsOpen] = useState<boolean>(false)
+
+	useEffect(() => {
+		setIsOpen(false)
+	}, [pathname])
 
 	const isDesktop = useMediaQuery('(min-width: 768px)')
 
