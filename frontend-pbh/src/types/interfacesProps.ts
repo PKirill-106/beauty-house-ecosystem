@@ -1,5 +1,13 @@
-import { Dispatch, ReactNode, RefObject, SetStateAction } from 'react'
-import { IBanner, ICategory, IProduct, IProductVariant } from './interfacesApi'
+import { Dispatch, ReactNode, Ref, RefObject, SetStateAction } from 'react'
+import { SwiperRef } from 'swiper/react'
+import { Swiper as SwiperType } from 'swiper/types'
+import {
+	IBanner,
+	ICategory,
+	IProduct,
+	IProductImage,
+	IProductVariant,
+} from './interfacesApi'
 
 export interface ILogo {
 	type: 'light' | 'dark'
@@ -95,4 +103,49 @@ export interface IProductGrid {
 	isLoading: boolean
 	displayedProducts: IProduct[]
 	skeletArrLength?: number
+}
+export interface IModal {
+	isOpen: boolean
+	onClose: () => void
+	children: ReactNode
+	isInput?: boolean
+}
+export interface IImageModal {
+	isOpen: boolean
+	onClose: () => void
+	images: IProductImage[]
+	productName: string
+	selectedImageIndex: number
+	onSelect: (i: number) => void
+	onPrev: () => void
+	onNext: () => void
+}
+export interface IMainImage {
+	images: IProductImage[]
+	selectedImageIndex: number
+	onClick: () => void
+	productName: string
+}
+export interface IThumbnail {
+	img: string
+	index: number
+	productName: string
+	selectedImageIndex: number
+	onClick: () => void
+	isModal: boolean
+}
+export interface IThumbnailScroller {
+	images: IProductImage[]
+	productName: string
+	selectedImageIndex: number
+	onSelect: (index: number) => void
+	setSwiperRef: (swiper: SwiperType) => void
+}
+export interface IImageList {
+	product: IProduct
+	selectedImageIndex: number
+	setSelectedImageIndex: (index: number) => void
+	handlePrev: () => void
+	handleNext: () => void
+	setSwiperRef: (swiper: SwiperType) => void
 }
