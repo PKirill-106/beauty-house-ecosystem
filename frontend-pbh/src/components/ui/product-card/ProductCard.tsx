@@ -51,7 +51,7 @@ export default function ProductCard(props: IProductCard) {
 							/>
 						</motion.div>
 					</Link>
-					<div className='flex flex-col gap-1 md:gap-2'>
+					<div className='flex flex-col gap-1 md:gap-2 p-2'>
 						<div className='flex flex-col md:gap-1'>
 							<Link href={productUrl}>
 								<h3 className='line-clamp-1'>{props.product.name}</h3>

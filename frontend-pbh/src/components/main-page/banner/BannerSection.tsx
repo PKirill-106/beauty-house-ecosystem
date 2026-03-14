@@ -1,11 +1,11 @@
 'use client'
+import Section from '@/components/ui/Section'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetBannersQuery } from '@/state/banner/bannerApiSlice'
 import { useRef } from 'react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
 import BannerSlide from './BannerSlide'
-import Section from '@/components/ui/Section'
 
 export default function BannerSection() {
 	const { data: banners, isLoading, isError } = useGetBannersQuery()
